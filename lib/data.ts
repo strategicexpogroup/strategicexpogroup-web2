@@ -72,14 +72,23 @@ export const serviceLines = [
   }
 ] as const;
 
-export const allies = [
-  "ALCALDÍA DE CARTAGENA",
-  "GOBIERNO DE BOLÍVAR",
-  "CAMARA COMERCIO DE LA COSTA",
-  "UNIVERSIDAD DE LA COSTA",
-  "MAS PAÍS",
-  "comfamiliar"
-] as const;
+export type Partner = {
+  name: string;
+  /** kebab-case: coincide con el nombre de archivo en /assets/logos/partners/ */
+  slug: string;
+};
+
+export const partners: Partner[] = [
+  { name: "ALCALDÍA DE CARTAGENA", slug: "alcaldia-cartagena" },
+  { name: "GOBIERNO DE BOLÍVAR", slug: "gobierno-bolivar" },
+  { name: "CAMARA COMERCIO DE LA COSTA", slug: "camara-comercio-costa" },
+  { name: "UNIVERSIDAD DE LA COSTA", slug: "universidad-costa" },
+  { name: "MAS PAÍS", slug: "mas-pais" },
+  { name: "comfamiliar", slug: "comfamiliar" }
+];
+
+/** Lista de nombres para páginas que solo muestran texto */
+export const allies = partners.map((p) => p.name);
 
 export const fairs: Fair[] = [
   {
@@ -91,7 +100,7 @@ export const fairs: Fair[] = [
     location:
       "Barranquilla, Colombia (evento presencial con espacios experienciales, académicos y comerciales)",
     featuredImage:
-      "https://placehold.co/1200x600/1E3A8A/FFFFFF?text=Feria+Educaci%C3%B3n+Caribe+2026",
+      "https://placehold.co/1200x600/002855/FFFFFF?text=Feria+Educaci%C3%B3n+Caribe+2026",
     shortDescription:
       "La plataforma que reúne las mejores oportunidades de educación superior, formación técnica, programas internacionales y financiamiento educativo para jóvenes del Caribe colombiano.",
     longDescription:
@@ -132,5 +141,7 @@ export const contactData = {
   email: "Strategicexpogroup@gmail.com",
   phone: "+57 314 577 4050",
   instagram: "@strategicexpogroup",
-  website: "www.strategicexpogroup.com"
+  website: "www.strategicexpogroup.com",
+  address: "Barranquilla, Colombia",
+  hours: "Lun. a Vie. 9:00 a. m. – 6:00 p. m."
 };

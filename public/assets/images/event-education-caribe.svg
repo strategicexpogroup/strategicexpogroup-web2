@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 520" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="520" fill="#0f172a"/>
+  <rect x="0" y="380" width="400" height="140" fill="#002855"/>
+  <text x="200" y="250" text-anchor="middle" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="18">Feria</text>
+  <text x="200" y="285" text-anchor="middle" fill="#64748b" font-family="system-ui,sans-serif" font-size="13">event-education-caribe.webp</text>
+</svg>

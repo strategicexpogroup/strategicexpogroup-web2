@@ -10,11 +10,15 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          primary: "#1E3A8A",
-          accent: "#F59E0B",
-          neutral: "#F9FAFB",
+          /** Mockup: azul institucional */
+          primary: "#002855",
+          /** Mockup: verde vibrante CTAs */
+          accent: "#00A859",
+          neutral: "#F8F9FA",
           text: "#111827",
-          muted: "#6B7280"
+          muted: "#6B7280",
+          /** Dorado legado feria / detalles opcionales */
+          gold: "#F59E0B"
         }
       },
       boxShadow: {

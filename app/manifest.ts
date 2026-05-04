@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "Organizamos ferias, congresos y exposiciones que impulsan negocios, fortalecen comunidades y proyectan el desarrollo de la región.",
     start_url: "/",
     display: "standalone",
-    background_color: "#F9FAFB",
-    theme_color: "#1E3A8A",
+    background_color: "#F8F9FA",
+    theme_color: "#002855",
     lang: "es-CO",
     icons: [
       {
