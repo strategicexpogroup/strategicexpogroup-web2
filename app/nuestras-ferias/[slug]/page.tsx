@@ -2,8 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { PartnerCarousel } from "@/components/partner-carousel";
 import { SectionReveal } from "@/components/section-reveal";
-import { allies, fairs } from "@/lib/data";
+import { assetPaths } from "@/lib/assets";
+import { fairs, partners } from "@/lib/data";
 
 type FairDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -63,8 +65,22 @@ export default async function FairDetailPage({ params }: FairDetailPageProps) {
       </SectionReveal>
 
       <SectionReveal className="mt-8 rounded-2xl border border-slate-200 bg-white p-6" delay={0.05}>
-        <h2 className="text-xl font-bold text-brand-primary">Quiénes somos de la feria</h2>
-        <p className="mt-3 leading-relaxed text-brand-muted">{fair.longDescription}</p>
+        <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+          <div>
+            <h2 className="text-xl font-bold text-brand-primary">Quienes somos los organizadores</h2>
+            <p className="mt-3 leading-relaxed text-brand-muted">{fair.longDescription}</p>
+          </div>
+          <div className="relative overflow-hidden rounded-2xl border border-slate-100 bg-slate-50">
+            <Image
+              src={assetPaths.images.eventEducationCaribe}
+              alt="Imagen oficial de la Feria Educación Caribe"
+              width={800}
+              height={1000}
+              className="h-full w-full object-cover"
+              sizes="(max-width: 1024px) 100vw, 40vw"
+            />
+          </div>
+        </div>
       </SectionReveal>
 
       <SectionReveal className="mt-8 grid gap-6 lg:grid-cols-2" delay={0.1}>
@@ -112,12 +128,8 @@ export default async function FairDetailPage({ params }: FairDetailPageProps) {
 
       <SectionReveal className="mt-8 rounded-2xl border border-slate-200 bg-white p-6" delay={0.16}>
         <h2 className="text-lg font-bold text-brand-primary">Patrocinadores del evento</h2>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {allies.map((ally) => (
-            <div key={ally} className="rounded-lg bg-slate-50 px-4 py-3 text-center text-sm font-semibold text-brand-text">
-              {ally}
-            </div>
-          ))}
+        <div className="mt-4">
+          <PartnerCarousel partners={partners} />
         </div>
       </SectionReveal>
 
