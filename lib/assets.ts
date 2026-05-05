@@ -10,7 +10,9 @@ export const assetPaths = {
   },
   images: {
     /** Placeholder SVG incluido; sustituir por .webp según guía */
-    hero: "/assets/images/hero-banner-01.svg",
+    // Usamos WebP porque existe en `public/assets/images/hero-banner-01.webp`
+    // (evita 404 si el SVG fue removido).
+    hero: "/assets/images/hero-banner-01.webp",
     eventEducationCaribe: "/assets/images/event-education-caribe.svg"
   },
   /** Logos de aliados: preferir WebP; si no existe, el carrusel muestra el nombre */
