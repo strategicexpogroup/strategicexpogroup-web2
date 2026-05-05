@@ -101,7 +101,7 @@ export const fairs: Fair[] = [
     location:
       "Barranquilla, Colombia (evento presencial con espacios experienciales, académicos y comerciales)",
     featuredImage:
-      "https://placehold.co/1200x600/002855/FFFFFF?text=Feria+Educaci%C3%B3n+Caribe+2026",
+      "/assets/images/feria-educacion-caribe-cover.webp",
     shortDescription:
       "La plataforma que reúne las mejores oportunidades de educación superior, formación técnica, programas internacionales y financiamiento educativo para jóvenes del Caribe colombiano.",
     longDescription:
