@@ -62,10 +62,20 @@ export default async function FairDetailPage({ params }: FairDetailPageProps) {
       </SectionReveal>
 
       <SectionReveal className="mt-8 rounded-2xl border border-slate-200 bg-white p-6" delay={0.05}>
-        <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+        <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
           <div>
             <h2 className="text-xl font-bold text-brand-primary">Quienes somos los organizadores</h2>
             <p className="mt-3 leading-relaxed text-brand-muted">{fair.longDescription}</p>
+            <div className="mt-6 space-y-6">
+              <article className="rounded-2xl border border-slate-200 bg-white p-6">
+                <h2 className="text-lg font-bold text-brand-primary">Misión de la feria</h2>
+                <p className="mt-3 text-brand-muted">{fair.mission}</p>
+              </article>
+              <article className="rounded-2xl border border-slate-200 bg-white p-6">
+                <h2 className="text-lg font-bold text-brand-primary">Visión de la feria</h2>
+                <p className="mt-3 text-brand-muted">{fair.vision}</p>
+              </article>
+            </div>
           </div>
           <div className="relative overflow-hidden rounded-2xl border border-slate-100 bg-slate-50">
             <Image
@@ -77,16 +87,6 @@ export default async function FairDetailPage({ params }: FairDetailPageProps) {
               sizes="(max-width: 1024px) 100vw, 40vw"
             />
           </div>
-        </div>
-        <div className="mt-6 grid gap-6 lg:grid-cols-2">
-          <article className="rounded-2xl border border-slate-200 bg-white p-6">
-            <h2 className="text-lg font-bold text-brand-primary">Misión de la feria</h2>
-            <p className="mt-3 text-brand-muted">{fair.mission}</p>
-          </article>
-          <article className="rounded-2xl border border-slate-200 bg-white p-6">
-            <h2 className="text-lg font-bold text-brand-primary">Visión de la feria</h2>
-            <p className="mt-3 text-brand-muted">{fair.vision}</p>
-          </article>
         </div>
       </SectionReveal>
 
