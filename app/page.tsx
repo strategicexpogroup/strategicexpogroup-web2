@@ -99,7 +99,7 @@ export default function HomePage() {
                 </li>
                 <li className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 shrink-0 text-brand-primary" aria-hidden />
-                  <span>Barranquilla, Colombia – Evento presencial</span>
+                  <span>{featuredFair.location}</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Users className="h-4 w-4 shrink-0 text-brand-primary" aria-hidden />

@@ -57,10 +57,7 @@ export default async function FairDetailPage({ params }: FairDetailPageProps) {
       </div>
 
       <SectionReveal className="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
-        <p className="text-sm font-semibold text-brand-primary">Próximamente en 2026</p>
-        <p className="mt-2 text-sm text-brand-muted">
-          Las fechas exactas del evento se anunciarán pronto.
-        </p>
+        <p className="text-sm font-semibold text-brand-primary">{fair.dateLabel}</p>
         <p className="mt-3 text-sm font-medium text-brand-text">{fair.location}</p>
       </SectionReveal>
 
@@ -81,17 +78,16 @@ export default async function FairDetailPage({ params }: FairDetailPageProps) {
             />
           </div>
         </div>
-      </SectionReveal>
-
-      <SectionReveal className="mt-8 grid gap-6 lg:grid-cols-2" delay={0.1}>
-        <article className="rounded-2xl border border-slate-200 bg-white p-6">
-          <h2 className="text-lg font-bold text-brand-primary">Misión de la feria</h2>
-          <p className="mt-3 text-brand-muted">{fair.mission}</p>
-        </article>
-        <article className="rounded-2xl border border-slate-200 bg-white p-6">
-          <h2 className="text-lg font-bold text-brand-primary">Visión de la feria</h2>
-          <p className="mt-3 text-brand-muted">{fair.vision}</p>
-        </article>
+        <div className="mt-6 grid gap-6 lg:grid-cols-2">
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h2 className="text-lg font-bold text-brand-primary">Misión de la feria</h2>
+            <p className="mt-3 text-brand-muted">{fair.mission}</p>
+          </article>
+          <article className="rounded-2xl border border-slate-200 bg-white p-6">
+            <h2 className="text-lg font-bold text-brand-primary">Visión de la feria</h2>
+            <p className="mt-3 text-brand-muted">{fair.vision}</p>
+          </article>
+        </div>
       </SectionReveal>
 
       <SectionReveal className="mt-8 grid gap-6 lg:grid-cols-3" delay={0.12}>

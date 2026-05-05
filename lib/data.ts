@@ -96,10 +96,10 @@ export const fairs: Fair[] = [
     slug: "feria-educacion-caribe",
     name: "Feria Educación Caribe 2026",
     tagline: "Conectando el talento del Caribe con el futuro",
-    dateLabel: "Próximamente en 2026",
-    upcomingLabel: "Próximamente",
+    dateLabel: "19 al 21 de octubre de 2026",
+    upcomingLabel: "19-21 OCT 2026",
     location:
-      "Barranquilla, Colombia (evento presencial con espacios experienciales, académicos y comerciales)",
+      "Cubo de Cristal (Plaza de la Paz), Barranquilla, Atlántico.",
     featuredImage:
       "/assets/images/feria-educacion-caribe-cover.webp",
     shortDescription:
