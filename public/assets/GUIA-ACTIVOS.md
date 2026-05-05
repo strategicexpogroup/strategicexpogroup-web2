@@ -26,9 +26,9 @@ Todos los archivos estáticos van en **`public/assets/`**. En el código se refe
 |---------|-------------|----------|----------------------|
 | `logo-main.svg` | Logo color (header) | SVG | Vector; altura visual ~40px en header |
 | `logo-white.svg` | Logo para fondos oscuros (footer) | SVG | Vector |
-| `feria-educacion-caribe.svg` o `.png` | Marca de la feria en bloque destacado | SVG o PNG | PNG transparente ~600×400 px máx. |
+| `feria-educacion-caribe.png` | Marca de la feria en bloque destacado | PNG | PNG transparente recomendado **1200×720 px** |
 
-> Para usar **PNG** en feria: nómbralo `feria-educacion-caribe.png` y actualiza la ruta en `lib/assets.ts` (`feriaEducacionCaribe`).
+> Actualmente el sitio usa `feria-educacion-caribe.png` desde `lib/assets.ts` (`feriaEducacionCaribe`).
 
 ### Imágenes (`public/assets/images/`)
 
@@ -51,6 +51,7 @@ Nombre fijo por slug (definidos en `lib/data.ts` → `partners`):
 | `partner-universidad-costa.webp` | UNIVERSIDAD DE LA COSTA |
 | `partner-mas-pais.webp` | MAS PAÍS |
 | `partner-comfamiliar.webp` | comfamiliar |
+| `partner-sena.webp` | SENA |
 
 - **Tamaño**: ancho máximo **300px** en el lienzo, altura proporcional; fondo transparente si aplica
 - **Formato**: WebP o PNG transparente

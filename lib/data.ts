@@ -84,7 +84,8 @@ export const partners: Partner[] = [
   { name: "CAMARA COMERCIO DE LA COSTA", slug: "camara-comercio-costa" },
   { name: "UNIVERSIDAD DE LA COSTA", slug: "universidad-costa" },
   { name: "MAS PAÍS", slug: "mas-pais" },
-  { name: "comfamiliar", slug: "comfamiliar" }
+  { name: "comfamiliar", slug: "comfamiliar" },
+  { name: "SENA", slug: "sena" }
 ];
 
 /** Lista de nombres para páginas que solo muestran texto */
