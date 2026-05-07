@@ -82,10 +82,10 @@ export function Navbar() {
             )}
           </div>
 
-          <Link href="/#patrocinadores" className={navMuted}>
+          <Link href="/patrocinadores" className={pathname.startsWith("/patrocinadores") ? navActive : navMuted}>
             Patrocinadores
           </Link>
-          <Link href="/contacto?motivo=stand" className={navMuted}>
+          <Link href="/stands" className={pathname.startsWith("/stands") ? navActive : navMuted}>
             Stands
           </Link>
           <Link href="/noticias" className={pathname.startsWith("/noticias") ? navActive : navMuted}>
@@ -152,10 +152,10 @@ export function Navbar() {
                   </Link>
                 ))}
               </div>
-              <Link href="/#patrocinadores" className="py-3 text-sm font-medium" onClick={() => setOpen(false)}>
+              <Link href="/patrocinadores" className="py-3 text-sm font-medium" onClick={() => setOpen(false)}>
                 Patrocinadores
               </Link>
-              <Link href="/contacto?motivo=stand" className="py-3 text-sm font-medium" onClick={() => setOpen(false)}>
+              <Link href="/stands" className="py-3 text-sm font-medium" onClick={() => setOpen(false)}>
                 Stands
               </Link>
               <Link href="/noticias" className="py-3 text-sm font-medium" onClick={() => setOpen(false)}>

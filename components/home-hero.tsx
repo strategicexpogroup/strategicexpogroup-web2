@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { CalendarClock, UsersRound, Waypoints } from "lucide-react";
 import { useState } from "react";
 import { assetPaths } from "@/lib/assets";
 
@@ -13,17 +14,17 @@ export function HomeHero() {
   const [active, setActive] = useState(0);
 
   return (
-    <section className="mx-auto max-w-7xl px-4 pb-12 pt-10 sm:px-6 lg:px-8 lg:pb-20 lg:pt-14">
-      <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
+    <section className="mx-auto max-w-7xl px-4 pb-10 pt-8 sm:px-6 sm:pb-12 sm:pt-10 lg:px-8 lg:pb-16 lg:pt-12">
+      <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
         <div>
-          <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-brand-primary sm:text-5xl lg:text-[2.75rem] xl:text-5xl">
+          <h1 className="text-3xl font-extrabold leading-tight tracking-tight text-brand-primary sm:text-4xl lg:text-[2.75rem] xl:text-5xl">
             Conectamos industrias, creamos oportunidades.
           </h1>
-          <p className="mt-6 text-lg leading-relaxed text-brand-muted">
+          <p className="mt-4 text-base leading-relaxed text-brand-muted sm:mt-5 sm:text-lg">
             Organizamos ferias, congresos y exposiciones que impulsan negocios, fortalecen comunidades y proyectan el
             desarrollo de la región.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-wrap gap-3 sm:mt-7">
             <Link href="/nuestras-ferias" className="btn-primary px-6 py-3">
               Conoce nuestras ferias
             </Link>
@@ -31,7 +32,21 @@ export function HomeHero() {
               Contáctanos
             </Link>
           </div>
-          <div className="mt-10 flex justify-center gap-2 lg:justify-start" role="tablist" aria-label="Carrusel hero">
+          <div className="mt-6 grid gap-2 sm:mt-8 sm:grid-cols-3 sm:gap-3">
+            <div className="rounded-xl border border-slate-200 bg-white px-3 py-2.5">
+              <UsersRound className="h-4 w-4 text-brand-primary" aria-hidden />
+              <p className="mt-1 text-xs font-semibold text-brand-primary">Audiencias calificadas</p>
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-white px-3 py-2.5">
+              <CalendarClock className="h-4 w-4 text-brand-primary" aria-hidden />
+              <p className="mt-1 text-xs font-semibold text-brand-primary">Agenda anual de eventos</p>
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-white px-3 py-2.5">
+              <Waypoints className="h-4 w-4 text-brand-primary" aria-hidden />
+              <p className="mt-1 text-xs font-semibold text-brand-primary">Conexiones de negocio</p>
+            </div>
+          </div>
+          <div className="mt-5 flex justify-center gap-2 lg:justify-start" role="tablist" aria-label="Carrusel hero">
             {slides.map((_, i) => (
               <button
                 key={i}
@@ -48,14 +63,14 @@ export function HomeHero() {
 
         <div className="relative mx-auto w-full max-w-xl lg:max-w-none">
           <div
-            className="pointer-events-none absolute -right-4 -bottom-6 h-[88%] w-[72%] rounded-[3rem] bg-brand-accent/90 blur-0"
+            className="pointer-events-none absolute -right-4 -bottom-6 h-[88%] w-[72%] rounded-[2.5rem] bg-brand-accent/90 blur-0 sm:rounded-[3rem]"
             aria-hidden
           />
           <div
-            className="pointer-events-none absolute -left-3 top-8 h-[55%] w-[45%] rounded-[2.5rem] bg-brand-primary/15"
+            className="pointer-events-none absolute -left-3 top-8 h-[55%] w-[45%] rounded-[2rem] bg-brand-primary/15 sm:rounded-[2.5rem]"
             aria-hidden
           />
-          <div className="relative overflow-hidden rounded-[2.5rem] shadow-2xl ring-1 ring-slate-200/60">
+          <div className="relative overflow-hidden rounded-[2rem] shadow-2xl ring-1 ring-slate-200/60 sm:rounded-[2.5rem]">
             <div className="aspect-[4/3] w-full bg-slate-100">
               <Image
                 src={slides[active].src}

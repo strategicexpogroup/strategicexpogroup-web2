@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import {
+  ArrowRight,
   BriefcaseBusiness,
   Building2,
   CalendarDays,
@@ -52,12 +53,12 @@ export default function HomePage() {
     <div className="bg-brand-neutral">
       <HomeHero />
 
-      <SectionReveal className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <SectionReveal className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
         <h2 className="text-center text-2xl font-bold text-brand-primary md:text-3xl">Nuestras líneas</h2>
         <p className="mx-auto mt-2 max-w-2xl text-center text-sm text-brand-muted">
           Soluciones integrales para ferias, congresos y activaciones de alto impacto.
         </p>
-        <StaggerGrid className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+        <StaggerGrid className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           {serviceLines.map((item, index) => {
             const Icon = icons[index];
             return (
@@ -73,7 +74,7 @@ export default function HomePage() {
         </StaggerGrid>
       </SectionReveal>
 
-      <SectionReveal className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8" delay={0.05}>
+      <SectionReveal className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 sm:pb-14 lg:px-8 lg:pb-16" delay={0.05}>
         <h2 className="text-center text-2xl font-bold text-brand-primary md:text-3xl">Nuestras ferias</h2>
         <div className="mt-8 overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-soft">
           <div className="grid lg:grid-cols-12 lg:gap-0">
@@ -150,7 +151,7 @@ export default function HomePage() {
         </div>
       </SectionReveal>
 
-      <SectionReveal id="patrocinadores" className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8" delay={0.08}>
+      <SectionReveal id="patrocinadores" className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 sm:pb-14 lg:px-8 lg:pb-16" delay={0.08}>
         <h2 className="text-center text-2xl font-bold text-brand-primary md:text-3xl">Aliados y patrocinadores</h2>
         <p className="mx-auto mt-2 max-w-2xl text-center text-sm text-brand-muted">
           Instituciones que acompañan nuestras ferias y fortalecen el ecosistema regional.
@@ -160,7 +161,30 @@ export default function HomePage() {
         </div>
       </SectionReveal>
 
-      <SectionReveal className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8" delay={0.1}>
+      <SectionReveal className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 sm:pb-14 lg:px-8 lg:pb-20" delay={0.09}>
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
+          <h2 className="text-lg font-bold text-brand-primary sm:text-xl">Explora Strategic Expo Group</h2>
+          <p className="mt-2 text-sm text-brand-muted">
+            Accesos directos a las secciones clave para que la navegación sea más rápida en móvil y escritorio.
+          </p>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <Link href="/nosotros" className="flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition hover:bg-slate-50">
+              Nosotros <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link href="/nuestras-ferias" className="flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition hover:bg-slate-50">
+              Ferias <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link href="/patrocinadores" className="flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition hover:bg-slate-50">
+              Patrocinadores <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link href="/stands" className="flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition hover:bg-slate-50">
+              Stands <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </SectionReveal>
+
+      <SectionReveal className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 sm:pb-16 lg:px-8 lg:pb-20" delay={0.1}>
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-brand-accent to-teal-600 px-6 py-12 text-white shadow-xl sm:px-10 lg:flex lg:items-center lg:justify-between lg:gap-8 lg:py-14">
           <div className="flex flex-col items-center gap-6 text-center lg:flex-row lg:text-left">
             <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white/15 ring-1 ring-white/30">
