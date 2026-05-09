@@ -15,8 +15,10 @@ import {
   Store,
   Users
 } from "lucide-react";
+import { HomeFeaturedFairMobile } from "@/components/home-featured-fair-mobile";
 import { HomeHero } from "@/components/home-hero";
 import { PartnerCarousel } from "@/components/partner-carousel";
+import { ServiceLinesCarousel } from "@/components/service-lines-carousel";
 import { SectionReveal } from "@/components/section-reveal";
 import { StaggerGrid, StaggerItem } from "@/components/stagger-grid";
 import { assetPaths } from "@/lib/assets";
@@ -34,6 +36,13 @@ const icons = [
 
 const fairSidebarIcons = [Store, Mic2, GraduationCap, Users, Handshake];
 
+const exploreQuickLinks = [
+  { href: "/nosotros", label: "Nosotros" },
+  { href: "/nuestras-ferias", label: "Ferias" },
+  { href: "/aliados-estrategicos", label: "Aliados estratégicos" },
+  { href: "/stands", label: "Stands" }
+] as const;
+
 export const metadata: Metadata = {
   title: "Inicio",
   description:
@@ -50,6 +59,12 @@ export default function HomePage() {
   const featuredFair = fairs[0];
   const fairSidebar = featuredFair.offerings.slice(0, 5);
 
+  const serviceLineSlides = serviceLines.map((item, index) => ({
+    title: item.title,
+    description: item.description,
+    bgSrc: serviceLineBackgroundImages[index] ?? assetPaths.serviceLine("line-01")
+  }));
+
   return (
     <div className="bg-brand-neutral">
       <HomeHero />
@@ -59,7 +74,10 @@ export default function HomePage() {
         <p className="mx-auto mt-2 max-w-2xl text-center text-sm text-brand-muted">
           Soluciones integrales para ferias, congresos y activaciones de alto impacto.
         </p>
-        <StaggerGrid className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+        <div className="mt-8 lg:hidden">
+          <ServiceLinesCarousel slides={serviceLineSlides} />
+        </div>
+        <StaggerGrid className="mt-8 hidden gap-3 sm:grid-cols-2 lg:grid lg:grid-cols-3 xl:grid-cols-6">
           {serviceLines.map((item, index) => {
             const Icon = icons[index];
             const bgSrc = serviceLineBackgroundImages[index] ?? assetPaths.serviceLine("line-01");
@@ -93,7 +111,10 @@ export default function HomePage() {
 
       <SectionReveal className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 sm:pb-14 lg:px-8 lg:pb-16" delay={0.05}>
         <h2 className="text-center text-2xl font-bold text-brand-primary md:text-3xl">Nuestras ferias</h2>
-        <div className="seg-brand-hover mt-8 overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-soft">
+        <div className="mt-8 lg:hidden">
+          <HomeFeaturedFairMobile fair={featuredFair} offerings={fairSidebar} />
+        </div>
+        <div className="seg-brand-hover mt-8 hidden overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-soft lg:block">
           <div className="grid lg:grid-cols-12 lg:gap-0">
             <div className="flex flex-col justify-center gap-5 border-b border-slate-100 p-8 lg:col-span-5 lg:border-b-0 lg:border-r lg:p-10">
               <Image
@@ -184,31 +205,28 @@ export default function HomePage() {
           <p className="mt-2 text-sm text-brand-muted">
             Accesos directos a las secciones clave para que la navegación sea más rápida en móvil y escritorio.
           </p>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <Link
-              href="/nosotros"
-              className="seg-link-shimmer seg-brand-hover flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition-colors hover:bg-slate-50"
-            >
-              Nosotros <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              href="/nuestras-ferias"
-              className="seg-link-shimmer seg-brand-hover flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition-colors hover:bg-slate-50"
-            >
-              Ferias <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              href="/aliados-estrategicos"
-              className="seg-link-shimmer seg-brand-hover flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition-colors hover:bg-slate-50"
-            >
-              Aliados estratégicos <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              href="/stands"
-              className="seg-link-shimmer seg-brand-hover flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition-colors hover:bg-slate-50"
-            >
-              Stands <ArrowRight className="h-4 w-4" />
-            </Link>
+          <p className="mt-3 text-xs text-brand-muted lg:hidden">Desliza horizontalmente para ver todos los accesos.</p>
+          <div className="mt-3 -mx-1 flex snap-x snap-mandatory gap-3 overflow-x-auto px-1 pb-2 scrollbar-hide lg:hidden">
+            {exploreQuickLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="seg-link-shimmer seg-brand-hover flex min-w-[min(82vw,280px)] shrink-0 snap-start items-center justify-between rounded-xl border border-slate-200 p-3.5 text-sm font-semibold text-brand-primary transition-colors hover:bg-slate-50"
+              >
+                {item.label} <ArrowRight className="h-4 w-4 shrink-0" />
+              </Link>
+            ))}
+          </div>
+          <div className="mt-4 hidden gap-3 lg:grid lg:grid-cols-4">
+            {exploreQuickLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="seg-link-shimmer seg-brand-hover flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition-colors hover:bg-slate-50"
+              >
+                {item.label} <ArrowRight className="h-4 w-4" />
+              </Link>
+            ))}
           </div>
         </div>
       </SectionReveal>
