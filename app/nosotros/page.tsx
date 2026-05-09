@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import {
   Award,
@@ -16,6 +17,7 @@ import {
   Trophy
 } from "lucide-react";
 import { SectionReveal } from "@/components/section-reveal";
+import { assetPaths } from "@/lib/assets";
 import { companyData } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -68,9 +70,73 @@ export default function NosotrosPage() {
         })}
       </SectionReveal>
 
-      <SectionReveal className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
-        <h2 className="text-xl font-bold text-brand-primary">¿Quiénes Somos?</h2>
-        <p className="mt-4 leading-relaxed text-brand-muted">{companyData.description}</p>
+      <SectionReveal className="mt-6" delay={0.04}>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-muted">Nuestra operación</p>
+        <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:items-stretch lg:gap-6">
+          <div className="seg-brand-hover relative min-h-[220px] flex-1 overflow-hidden rounded-2xl border border-slate-200/80 shadow-md lg:min-h-[340px]">
+            <Image
+              src={assetPaths.images.hero}
+              alt="Ambiente de feria y montaje de eventos Strategic Expo Group"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 62vw"
+            />
+            <div
+              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#162134]/50 via-transparent to-[#17a3dd]/15"
+              aria-hidden
+            />
+          </div>
+          <div className="flex w-full flex-col gap-4 lg:w-[min(100%,300px)] lg:flex-shrink-0">
+            <div className="seg-brand-hover relative aspect-[3/4] min-h-[200px] w-full overflow-hidden rounded-2xl border border-slate-200/80 shadow-md">
+              <Image
+                src={assetPaths.images.eventEducationCaribe}
+                alt="Participantes en feria educativa en el Caribe"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 300px"
+              />
+              <div
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#162134]/40 via-transparent to-transparent"
+                aria-hidden
+              />
+            </div>
+            <div className="seg-brand-hover relative aspect-[5/3] w-full overflow-hidden rounded-2xl border border-slate-200/80 shadow-md">
+              <Image
+                src={assetPaths.images.feriaEducacionCover}
+                alt="Feria Educación Caribe — plataforma de Strategic Expo Group"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 300px"
+              />
+              <div
+                className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#048240]/15 to-[#162134]/30"
+                aria-hidden
+              />
+            </div>
+          </div>
+        </div>
+      </SectionReveal>
+
+      <SectionReveal className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm" delay={0.045}>
+        <div className="grid gap-0 lg:grid-cols-2 lg:items-center">
+          <div className="order-2 p-6 sm:p-8 lg:order-1">
+            <h2 className="text-xl font-bold text-brand-primary">¿Quiénes somos?</h2>
+            <p className="mt-4 leading-relaxed text-brand-muted">{companyData.description}</p>
+          </div>
+          <div className="relative order-1 min-h-[220px] w-full lg:order-2 lg:min-h-[min(100%,320px)]">
+            <Image
+              src={assetPaths.images.contactPresenceMap}
+              alt="Mapa de presencia y cobertura regional de Strategic Expo Group"
+              fill
+              className="object-cover object-center"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+            <div
+              className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-white/90 via-white/25 to-transparent lg:block"
+              aria-hidden
+            />
+          </div>
+        </div>
       </SectionReveal>
 
       <SectionReveal className="mt-6 grid gap-4 lg:grid-cols-2" delay={0.05}>
@@ -112,6 +178,32 @@ export default function NosotrosPage() {
             ))}
           </ul>
         </article>
+      </SectionReveal>
+
+      <SectionReveal className="mt-6" delay={0.12}>
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-muted">Stands y espacios</p>
+        <h2 className="mt-2 text-lg font-bold text-brand-primary">Ejecución en campo</h2>
+        <p className="mt-1 max-w-2xl text-sm text-brand-muted">
+          Diseño, montaje y experiencias alineadas con la identidad de cada marca.
+        </p>
+        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+          {[
+            { src: assetPaths.images.standsGallery01, alt: "Montaje de stand para feria o congreso" },
+            { src: assetPaths.images.standsGallery02, alt: "Stand modular en evento corporativo" },
+            { src: assetPaths.images.standsGallery03, alt: "Experiencia de marca en espacio de exposición" }
+          ].map((item) => (
+            <div
+              key={item.src}
+              className="seg-brand-hover relative aspect-[4/3] overflow-hidden rounded-2xl border border-slate-200/80 shadow-md"
+            >
+              <Image src={item.src} alt={item.alt} fill className="object-cover" sizes="(max-width: 640px) 100vw, 33vw" />
+              <div
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#162134]/35 via-transparent to-[#17a3dd]/10"
+                aria-hidden
+              />
+            </div>
+          ))}
+        </div>
       </SectionReveal>
     </div>
   );
