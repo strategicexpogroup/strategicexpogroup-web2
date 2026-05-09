@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { escapeHtml, sendSiteNotification } from "@/lib/outbound-mail";
+import { escapeHtml, sendWithResend } from "@/lib/outbound-mail";
 
 function clamp(s: string, max: number): string {
   const t = s.trim();
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Indica un correo electrónico válido." }, { status: 400 });
   }
 
-  const honeypot = typeof b.company === "string" ? b.company : "";
+  const honeypot = typeof b._seg_hp === "string" ? b._seg_hp : "";
   if (honeypot.length > 0) {
     return NextResponse.json({ ok: true }, { status: 200 });
   }
@@ -38,15 +38,10 @@ export async function POST(request: Request) {
 
   const plain = `Nueva suscripción al newsletter.\nCorreo: ${email}`;
 
-  const result = await sendSiteNotification({
+  const result = await sendWithResend({
     subject,
     html,
-    replyTo: email,
-    web3formsFallback: {
-      name: "Newsletter (footer)",
-      email,
-      message: plain
-    }
+    replyTo: email
   });
 
   if (!result.ok) {

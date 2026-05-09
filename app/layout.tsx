@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { LayoutShell } from "@/components/layout-shell";
+import { readWeb3AccessKeyForClient } from "@/lib/web3forms-env";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -39,10 +40,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const web3AccessKey = readWeb3AccessKeyForClient();
+
   return (
     <html lang="es">
       <body className={`${montserrat.className} ${montserrat.variable}`}>
-        <LayoutShell>{children}</LayoutShell>
+        <LayoutShell web3AccessKey={web3AccessKey}>{children}</LayoutShell>
       </body>
     </html>
   );

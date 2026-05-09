@@ -3,25 +3,64 @@
 import { useState } from "react";
 import { Send } from "lucide-react";
 import { contactData } from "@/lib/data";
+import { postWeb3Forms, resolveWeb3AccessKey } from "@/lib/web3forms-client";
 
-export function FooterNewsletter() {
+type FooterNewsletterProps = {
+  web3AccessKey?: string;
+};
+
+export function FooterNewsletter({ web3AccessKey }: FooterNewsletterProps) {
   const [email, setEmail] = useState("");
-  const [companyHoneypot, setCompanyHoneypot] = useState("");
+  const [segHp, setSegHp] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
   return (
     <form
-      className="mt-3"
+      className="relative mt-3"
       onSubmit={async (e) => {
         e.preventDefault();
+        if (segHp.trim().length > 0) {
+          setStatus("success");
+          return;
+        }
+
         setStatus("sending");
         setErrorMessage("");
+
+        const web3Key = resolveWeb3AccessKey(web3AccessKey);
+        if (web3Key) {
+          const { ok, message } = await postWeb3Forms(
+            {
+              subject: "[Strategic Expo — Newsletter] Nueva suscripción desde el footer",
+              name: "Newsletter (footer del sitio)",
+              email,
+              message: `Solicitud de suscripción al newsletter.\nCorreo del suscriptor: ${email}`
+            },
+            web3AccessKey
+          );
+
+          if (!ok) {
+            setStatus("error");
+            setErrorMessage(
+              message === "NO_PUBLIC_KEY"
+                ? "Falta WEB3FORMS_ACCESS_KEY o NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY en Vercel (y redeploy)."
+                : message || "No se pudo registrar. Intenta de nuevo."
+            );
+            return;
+          }
+
+          setStatus("success");
+          setEmail("");
+          setSegHp("");
+          return;
+        }
+
         try {
           const res = await fetch("/api/newsletter", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, company: companyHoneypot })
+            body: JSON.stringify({ email, _seg_hp: segHp })
           });
           const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string; code?: string };
 
@@ -29,7 +68,9 @@ export function FooterNewsletter() {
             setStatus("error");
             if (data.code === "NOT_CONFIGURED") {
               setErrorMessage(
-                "Suscripción web no activada aún. Escríbenos a " + contactData.email + " para recibir novedades."
+                "Suscripción no configurada: añade WEB3FORMS_ACCESS_KEY en Vercel (o Resend). Escríbenos a " +
+                  contactData.email +
+                  "."
               );
             } else {
               setErrorMessage(data.error || "No se pudo registrar. Intenta de nuevo.");
@@ -39,7 +80,7 @@ export function FooterNewsletter() {
 
           setStatus("success");
           setEmail("");
-          setCompanyHoneypot("");
+          setSegHp("");
         } catch {
           setStatus("error");
           setErrorMessage("Error de red. Intenta más tarde o escríbenos a " + contactData.email + ".");
@@ -48,17 +89,17 @@ export function FooterNewsletter() {
       aria-label="Newsletter"
     >
       <div className="flex flex-col gap-2">
+        <input
+          type="text"
+          name="_seg_hp"
+          value={segHp}
+          onChange={(e) => setSegHp(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+          className="pointer-events-none absolute left-0 top-0 h-px w-px opacity-0"
+          aria-hidden
+        />
         <div className="flex gap-2">
-          <input
-            type="text"
-            name="company"
-            value={companyHoneypot}
-            onChange={(e) => setCompanyHoneypot(e.target.value)}
-            tabIndex={-1}
-            autoComplete="off"
-            className="absolute left-[-9999px] h-0 w-0 opacity-0"
-            aria-hidden
-          />
           <label htmlFor="footer-email" className="sr-only">
             Correo electrónico
           </label>

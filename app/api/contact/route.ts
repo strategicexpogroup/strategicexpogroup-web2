@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { escapeHtml, sendSiteNotification } from "@/lib/outbound-mail";
+import { escapeHtml, sendWithResend } from "@/lib/outbound-mail";
 
 const MOTIVES = new Set(["stand", "patrocinio", "informacion-general", "otro"]);
 
@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Correo electrónico no válido." }, { status: 400 });
   }
 
-  const honeypot = typeof b.company === "string" ? b.company : "";
+  const honeypot = typeof b._seg_hp === "string" ? b._seg_hp : "";
   if (honeypot.length > 0) {
     return NextResponse.json({ ok: true }, { status: 200 });
   }
@@ -60,15 +60,10 @@ export async function POST(request: Request) {
     <p style="white-space:pre-wrap">${escapeHtml(mensaje)}</p>
   `.trim();
 
-  const result = await sendSiteNotification({
+  const result = await sendWithResend({
     subject,
     html,
-    replyTo: correo,
-    web3formsFallback: {
-      name: nombre,
-      email: correo,
-      message: plain
-    }
+    replyTo: correo
   });
 
   if (!result.ok) {
