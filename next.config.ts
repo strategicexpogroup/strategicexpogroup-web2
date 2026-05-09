@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname)
   },
+  async redirects() {
+    return [{ source: "/patrocinadores", destination: "/aliados-estrategicos", permanent: true }];
+  },
   images: {
     remotePatterns: [
       {

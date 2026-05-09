@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ExpositorCard } from "@/components/expositor-card";
+import { InternationalGalleryTile } from "@/components/international-gallery-tile";
 import { PartnerCarousel } from "@/components/partner-carousel";
 import { SectionReveal } from "@/components/section-reveal";
 import { assetPaths } from "@/lib/assets";
@@ -117,13 +119,48 @@ export default async function FairDetailPage({ params }: FairDetailPageProps) {
         </article>
       </SectionReveal>
 
-      <SectionReveal className="mt-8 rounded-2xl border border-slate-200 bg-white p-6" delay={0.14}>
-        <h2 className="text-lg font-bold text-brand-primary">Componente internacional</h2>
-        <p className="mt-3 text-brand-muted">{fair.internationalComponent}</p>
+      {fair.expositores && fair.expositores.length > 0 ? (
+        <SectionReveal className="mt-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8" delay={0.13}>
+          <h2 className="text-xl font-bold text-brand-primary">Expositores</h2>
+          <p className="mt-2 max-w-3xl text-sm text-brand-muted">
+            Voces y perfiles que acompañan a los visitantes durante la feria. Los textos son editables en{" "}
+            <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs text-brand-text">lib/data.ts</code>; las fotos
+            van en la carpeta indicada en la guía de activos.
+          </p>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {fair.expositores.map((exp) => (
+              <ExpositorCard
+                key={exp.id}
+                name={exp.name}
+                title={exp.title}
+                bio={exp.bio}
+                photoSrc={assetPaths.fair.expositorPhoto(fair.slug, exp.id)}
+              />
+            ))}
+          </div>
+        </SectionReveal>
+      ) : null}
+
+      <SectionReveal className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 sm:p-8" delay={0.14}>
+        <h2 className="text-xl font-bold text-brand-primary">Componente internacional</h2>
+        <p className="mt-3 max-w-3xl text-brand-muted">{fair.internationalComponent}</p>
+
+        {fair.internationalGallery && fair.internationalGallery.length > 0 ? (
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {fair.internationalGallery.map((item) => (
+              <InternationalGalleryTile
+                key={item.file}
+                src={assetPaths.fair.internacional(fair.slug, item.file)}
+                label={item.label}
+                alt={item.alt}
+              />
+            ))}
+          </div>
+        ) : null}
       </SectionReveal>
 
       <SectionReveal className="mt-8 rounded-2xl border border-slate-200 bg-white p-6" delay={0.16}>
-        <h2 className="text-lg font-bold text-brand-primary">Patrocinadores del evento</h2>
+        <h2 className="text-lg font-bold text-brand-primary">Aliados estratégicos del evento</h2>
         <div className="mt-4">
           <PartnerCarousel partners={partners} />
         </div>

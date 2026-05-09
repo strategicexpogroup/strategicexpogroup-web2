@@ -80,8 +80,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/patrocinadores" className="transition hover:text-white">
-                  Patrocinadores
+                <Link href="/aliados-estrategicos" className="transition hover:text-white">
+                  Aliados estratégicos
                 </Link>
               </li>
               <li>

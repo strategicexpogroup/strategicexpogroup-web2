@@ -39,7 +39,7 @@ export default function NoticiasPage() {
         </div>
         <h1 className="mt-3 text-3xl font-extrabold text-brand-primary sm:text-4xl">Novedades y comunicados</h1>
         <p className="mt-3 max-w-3xl text-sm text-brand-muted sm:text-base">
-          Publicaremos avances de ferias, alianzas, tendencias y contenido útil para expositores y patrocinadores.
+          Publicaremos avances de ferias, alianzas, tendencias y contenido útil para expositores y aliados estratégicos.
         </p>
       </SectionReveal>
 

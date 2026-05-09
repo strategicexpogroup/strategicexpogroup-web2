@@ -1,3 +1,20 @@
+/** Perfil de expositor (texto editable; foto en `expositores/{id}.webp`) */
+export type FairExpositor = {
+  /** Coincide con el nombre de archivo sin extensión, p. ej. `expositor-01` */
+  id: string;
+  name: string;
+  title: string;
+  bio: string;
+};
+
+/** Imagen de apoyo para la sección Componente internacional */
+export type FairInternationalVisual = {
+  /** Nombre de archivo en `internacional/`, p. ej. `internacional-01-mapa.webp` */
+  file: string;
+  label: string;
+  alt: string;
+};
+
 export type Fair = {
   slug: string;
   name: string;
@@ -14,6 +31,8 @@ export type Fair = {
   targetAudience: string[];
   whyParticipate: string[];
   internationalComponent: string;
+  expositores?: FairExpositor[];
+  internationalGallery?: FairInternationalVisual[];
 };
 
 export const companyData = {
@@ -134,7 +153,44 @@ export const fairs: Fair[] = [
       "Impulsar procesos de admisión y matrícula"
     ],
     internationalComponent:
-      "Participación de agencias y programas en países como Canadá, Estados Unidos, Australia, España y Reino Unido."
+      "Participación de agencias y programas en países como Canadá, Estados Unidos, Australia, España y Reino Unido.",
+    expositores: [
+      {
+        id: "expositor-01",
+        name: "Nombre y apellido",
+        title: "Profesión o cargo / Institución",
+        bio: "Breve resumen del perfil, experiencia y rol frente a los visitantes de la feria. Podrás sustituir este texto por la biografía oficial."
+      },
+      {
+        id: "expositor-02",
+        name: "Nombre y apellido",
+        title: "Profesión o cargo / Institución",
+        bio: "Texto corto orientado a credibilidad y temas que abordará en el evento."
+      },
+      {
+        id: "expositor-03",
+        name: "Nombre y apellido",
+        title: "Profesión o cargo / Institución",
+        bio: "Un párrafo breve basta: enfoque académico, empresarial o de orientación según corresponda."
+      }
+    ],
+    internationalGallery: [
+      {
+        file: "internacional-01-programas-exterior.webp",
+        label: "Programas en el exterior",
+        alt: "Estudiantes explorando oportunidades de educación internacional"
+      },
+      {
+        file: "internacional-02-agencias.webp",
+        label: "Agencias y aliados",
+        alt: "Representantes de agencias educativas internacionales"
+      },
+      {
+        file: "internacional-03-networking-global.webp",
+        label: "Conexión global",
+        alt: "Networking y encuentros con enfoque internacional"
+      }
+    ]
   }
 ];
 

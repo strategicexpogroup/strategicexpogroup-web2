@@ -14,6 +14,36 @@ a {
   @apply outline-none focus-visible:ring-2 focus-visible:ring-brand-primary/40 focus-visible:ring-offset-2;
 }
 
+/* Hero inicio: contraste y legibilidad sobre fotos claras */
+.text-hero-readable {
+  text-shadow:
+    0 0 42px rgba(22, 33, 52, 0.95),
+    0 2px 8px rgba(0, 0, 0, 0.85),
+    0 12px 48px rgba(0, 0, 0, 0.45);
+}
+
+.hero-reading-panel {
+  background: linear-gradient(
+    145deg,
+    rgba(22, 33, 52, 0.78) 0%,
+    rgba(22, 33, 52, 0.62) 45%,
+    rgba(4, 130, 64, 0.22) 100%
+  );
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.12),
+    0 24px 64px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-reading-panel {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
 @layer components {
   .btn-primary {
     @apply inline-flex items-center justify-center rounded-lg bg-brand-primary px-5 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-brand-primary/90 focus-visible:ring-2 focus-visible:ring-brand-primary/40 focus-visible:ring-offset-2;
@@ -95,6 +125,81 @@ a {
     }
   }
 
+  /**
+   * Tarjetas Aliados estratégicos (beneficios): overlay con 4 colores al hover/focus;
+   * pulso al hacer clic (:active). Colores: #048240 #e1e11e #17a3dd #162134
+   */
+  .ally-benefit-card {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition: transform 0.2s ease;
+  }
+
+  .ally-benefit-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+    background: linear-gradient(
+      130deg,
+      rgba(4, 130, 64, 0.22) 0%,
+      rgba(225, 225, 30, 0.18) 32%,
+      rgba(23, 163, 221, 0.2) 66%,
+      rgba(22, 33, 52, 0.16) 100%
+    );
+  }
+
+  .ally-benefit-card:hover::before,
+  .ally-benefit-card:focus-visible::before {
+    opacity: 1;
+  }
+
+  @keyframes ally-tap-flash {
+    0% {
+      box-shadow:
+        0 0 0 0 #048240,
+        0 8px 0 rgba(4, 130, 64, 0.25);
+    }
+    30% {
+      box-shadow:
+        0 0 0 3px #e1e11e,
+        0 12px 28px rgba(225, 225, 30, 0.2);
+    }
+    60% {
+      box-shadow:
+        0 0 0 4px #17a3dd,
+        0 14px 32px rgba(23, 163, 221, 0.28);
+    }
+    100% {
+      box-shadow:
+        0 0 0 1px #162134,
+        0 10px 24px rgba(22, 33, 52, 0.12);
+    }
+  }
+
+  .ally-benefit-card:active {
+    transform: scale(0.985);
+    animation: ally-tap-flash 0.5s ease-out 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ally-benefit-card::before {
+      transition: none;
+    }
+    .ally-benefit-card:hover::before,
+    .ally-benefit-card:focus-visible::before {
+      opacity: 0.35;
+    }
+    .ally-benefit-card:active {
+      animation: none;
+      transform: none;
+    }
+  }
+
   /** Enlaces / bloques con barra inferior animada con la paleta */
   .seg-link-shimmer {
     position: relative;
@@ -123,6 +228,49 @@ a {
   @media (prefers-reduced-motion: reduce) {
     .seg-link-shimmer:hover::after {
       animation: none;
+    }
+  }
+
+  /** Carrusel infinito de logos (aliados estratégicos) */
+  @keyframes partner-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .partner-marquee-viewport {
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 6%,
+      #000 94%,
+      transparent
+    );
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+
+  .partner-marquee-track {
+    display: inline-flex;
+    width: max-content;
+    animation: partner-marquee var(--partner-marquee-duration, 45s) linear infinite;
+    will-change: transform;
+  }
+
+  .partner-marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .partner-marquee-track {
+      animation: none;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+      max-width: 100%;
+      row-gap: 1rem;
     }
   }
 }

@@ -62,7 +62,7 @@ export default function HomePage() {
         <StaggerGrid className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           {serviceLines.map((item, index) => {
             const Icon = icons[index];
-            const bgSrc = serviceLineBackgroundImages[index] ?? assetPaths.images.hero;
+            const bgSrc = serviceLineBackgroundImages[index] ?? assetPaths.serviceLine("line-01");
             return (
               <StaggerItem key={item.title}>
                 <article className="seg-brand-hover group relative flex min-h-[260px] flex-col overflow-hidden rounded-xl border border-slate-200/70 shadow-sm transition-transform duration-300 hover:-translate-y-1">
@@ -168,8 +168,8 @@ export default function HomePage() {
         </div>
       </SectionReveal>
 
-      <SectionReveal id="patrocinadores" className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 sm:pb-14 lg:px-8 lg:pb-16" delay={0.08}>
-        <h2 className="text-center text-2xl font-bold text-brand-primary md:text-3xl">Aliados y patrocinadores</h2>
+      <SectionReveal id="aliados-estrategicos" className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 sm:pb-14 lg:px-8 lg:pb-16" delay={0.08}>
+        <h2 className="text-center text-2xl font-bold text-brand-primary md:text-3xl">Aliados estratégicos</h2>
         <p className="mx-auto mt-2 max-w-2xl text-center text-sm text-brand-muted">
           Instituciones que acompañan nuestras ferias y fortalecen el ecosistema regional.
         </p>
@@ -198,10 +198,10 @@ export default function HomePage() {
               Ferias <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
-              href="/patrocinadores"
+              href="/aliados-estrategicos"
               className="seg-link-shimmer seg-brand-hover flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition-colors hover:bg-slate-50"
             >
-              Patrocinadores <ArrowRight className="h-4 w-4" />
+              Aliados estratégicos <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               href="/stands"
