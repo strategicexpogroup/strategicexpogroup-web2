@@ -1,8 +1,6 @@
 /**
  * Envío **solo desde el servidor** vía Resend (clave secreta).
- *
- * Web3Forms va por el navegador: `lib/web3forms-client.ts` + `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY`.
- * @see https://docs.web3forms.com/getting-started/api-reference
+ * Web3Forms se usa en `app/api/web3forms/route.ts` (proxy mismo origen).
  */
 
 /** Destino Resend si no hay CONTACT_TO_EMAIL; alinear con Web3Forms / contacto visible. */

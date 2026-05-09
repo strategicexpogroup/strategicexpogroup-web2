@@ -6,7 +6,6 @@ import { assetPaths } from "@/lib/assets";
 import { ContactForm } from "@/components/contact-form";
 import { SectionReveal } from "@/components/section-reveal";
 import { contactData } from "@/lib/data";
-import { readWeb3AccessKeyForClient } from "@/lib/web3forms-env";
 
 export const metadata: Metadata = {
   title: "Contacto",
@@ -37,8 +36,6 @@ const asideRows: { variant: Variant; label: string; value: string }[] = [
 ];
 
 export default function ContactoPage() {
-  const web3AccessKey = readWeb3AccessKeyForClient();
-
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
       <h1 className="text-3xl font-extrabold text-brand-text sm:text-4xl">Contacto</h1>
@@ -72,7 +69,7 @@ export default function ContactoPage() {
             </div>
           }
         >
-          <ContactForm web3AccessKey={web3AccessKey} />
+          <ContactForm />
         </Suspense>
 
         <aside className="flex flex-col gap-8 rounded-2xl border border-slate-200 bg-white p-6">

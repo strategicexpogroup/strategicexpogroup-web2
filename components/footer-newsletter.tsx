@@ -3,13 +3,8 @@
 import { useState } from "react";
 import { Send } from "lucide-react";
 import { contactData } from "@/lib/data";
-import { postWeb3Forms, resolveWeb3AccessKey } from "@/lib/web3forms-client";
 
-type FooterNewsletterProps = {
-  web3AccessKey?: string;
-};
-
-export function FooterNewsletter({ web3AccessKey }: FooterNewsletterProps) {
+export function FooterNewsletter() {
   const [email, setEmail] = useState("");
   const [segHp, setSegHp] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
@@ -28,62 +23,27 @@ export function FooterNewsletter({ web3AccessKey }: FooterNewsletterProps) {
         setStatus("sending");
         setErrorMessage("");
 
-        const web3Key = resolveWeb3AccessKey(web3AccessKey);
-        if (web3Key) {
-          try {
-            const { ok, message } = await postWeb3Forms(
-              {
-                subject: "[Strategic Expo — Newsletter] Nueva suscripción desde el footer",
-                name: "Newsletter (footer del sitio)",
-                email,
-                message: `Solicitud de suscripción al newsletter.\nCorreo del suscriptor: ${email}`
-              },
-              web3AccessKey
-            );
-
-            if (!ok) {
-              setStatus("error");
-              setErrorMessage(
-                message === "NO_PUBLIC_KEY"
-                  ? "Falta WEB3FORMS_ACCESS_KEY o NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY en Vercel (y redeploy)."
-                  : message || "No se pudo registrar. Intenta de nuevo."
-              );
-              return;
-            }
-
-            setStatus("success");
-            setEmail("");
-            setSegHp("");
-          } catch {
-            setStatus("error");
-            setErrorMessage("Error al enviar. Prueba sin bloqueadores o escríbenos a " + contactData.email + ".");
-          }
-          return;
-        }
+        const ac = new AbortController();
+        const tid = setTimeout(() => ac.abort(), 28_000);
 
         try {
-          const ac = new AbortController();
-          const tid = setTimeout(() => ac.abort(), 22_000);
-          let res: Response;
-          try {
-            res = await fetch("/api/newsletter", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email, _seg_hp: segHp }),
-              signal: ac.signal
-            });
-          } finally {
-            clearTimeout(tid);
-          }
-          const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string; code?: string };
+          const res = await fetch("/api/web3forms", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ kind: "newsletter", email, _seg_hp: segHp }),
+            signal: ac.signal
+          });
+          const data = (await res.json().catch(() => ({}))) as {
+            ok?: boolean;
+            error?: string;
+            code?: string;
+          };
 
           if (!res.ok) {
             setStatus("error");
             if (data.code === "NOT_CONFIGURED") {
               setErrorMessage(
-                "Suscripción no configurada: añade WEB3FORMS_ACCESS_KEY en Vercel (o Resend). Escríbenos a " +
-                  contactData.email +
-                  "."
+                "Newsletter no configurado en el servidor. Escríbenos a " + contactData.email + "."
               );
             } else {
               setErrorMessage(data.error || "No se pudo registrar. Intenta de nuevo.");
@@ -102,6 +62,8 @@ export function FooterNewsletter({ web3AccessKey }: FooterNewsletterProps) {
               ? "Tiempo de espera agotado. Intenta de nuevo."
               : "Error de red. Intenta más tarde o escríbenos a " + contactData.email + "."
           );
+        } finally {
+          clearTimeout(tid);
         }
       }}
       aria-label="Newsletter"

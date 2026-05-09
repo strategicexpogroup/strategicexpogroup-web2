@@ -5,11 +5,7 @@ import { assetPaths } from "@/lib/assets";
 import { contactData, fairs } from "@/lib/data";
 import { FooterNewsletter } from "@/components/footer-newsletter";
 
-type FooterProps = {
-  web3AccessKey?: string;
-};
-
-export function Footer({ web3AccessKey }: FooterProps) {
+export function Footer() {
   return (
     <footer className="mt-16 bg-brand-primary text-slate-200">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
@@ -149,7 +145,7 @@ export function Footer({ web3AccessKey }: FooterProps) {
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white">Newsletter</h3>
             <p className="mt-3 text-sm text-slate-300">Recibe novedades sobre nuestras ferias y eventos.</p>
-            <FooterNewsletter web3AccessKey={web3AccessKey} />
+            <FooterNewsletter />
           </div>
         </div>
       </div>

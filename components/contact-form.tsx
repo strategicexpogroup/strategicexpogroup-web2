@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { contactData } from "@/lib/data";
-import { postWeb3Forms, resolveWeb3AccessKey } from "@/lib/web3forms-client";
 
 const motives = [
   { value: "stand", label: "Stand" },
@@ -15,12 +14,7 @@ const motives = [
 const fieldClass =
   "w-full rounded-lg border border-slate-300 px-3 py-2 outline-none transition-colors duration-200";
 
-type ContactFormProps = {
-  /** Inyectada desde el servidor (WEB3FORMS_ACCESS_KEY o NEXT_PUBLIC_*). */
-  web3AccessKey?: string;
-};
-
-export function ContactForm({ web3AccessKey }: ContactFormProps) {
+export function ContactForm() {
   const params = useSearchParams();
   const motivoInicial = useMemo(() => {
     const raw = params.get("motivo");
@@ -37,7 +31,6 @@ export function ContactForm({ web3AccessKey }: ContactFormProps) {
     mensaje: "",
     motivo: motivoInicial
   });
-  /** Honeypot: si se rellena (bots / autocompletado agresivo), no enviar. */
   const [segHp, setSegHp] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -60,81 +53,41 @@ export function ContactForm({ web3AccessKey }: ContactFormProps) {
     setStatus("sending");
     setErrorMessage("");
 
-    const web3Key = resolveWeb3AccessKey(web3AccessKey);
-    if (web3Key) {
-      try {
-        const { ok, message } = await postWeb3Forms(
-          {
-            subject: `[Strategic Expo — Contacto web] ${formData.motivo}`,
-            name: formData.nombre,
-            email: formData.correo,
-            message: [
-              `Teléfono: ${formData.telefono}`,
-              `Motivo: ${formData.motivo}`,
-              "",
-              formData.mensaje
-            ].join("\n")
-          },
-          web3AccessKey
-        );
-
-        if (!ok) {
-          setStatus("error");
-          setErrorMessage(
-            message === "NO_PUBLIC_KEY"
-              ? "Falta la clave de Web3Forms: en Vercel define WEB3FORMS_ACCESS_KEY o NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY y vuelve a desplegar."
-              : message || "No se pudo enviar. Intenta de nuevo o escríbenos a " + contactData.email + "."
-          );
-          return;
-        }
-
-        setStatus("success");
-        setFormData({
-          nombre: "",
-          correo: "",
-          telefono: "",
-          mensaje: "",
-          motivo: motivoInicial
-        });
-        setSegHp("");
-      } catch {
-        setStatus("error");
-        setErrorMessage(
-          "Error inesperado al enviar. Prueba sin extensiones de bloqueo, o escríbenos a " + contactData.email + "."
-        );
-      }
-      return;
-    }
+    const ac = new AbortController();
+    const tid = setTimeout(() => ac.abort(), 28_000);
 
     try {
-      const ac = new AbortController();
-      const tid = setTimeout(() => ac.abort(), 22_000);
-      let res: Response;
-      try {
-        res = await fetch("/api/contact", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            ...formData,
-            _seg_hp: segHp
-          }),
-          signal: ac.signal
-        });
-      } finally {
-        clearTimeout(tid);
-      }
-      const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string; code?: string };
+      const res = await fetch("/api/web3forms", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          kind: "contact",
+          ...formData,
+          _seg_hp: segHp
+        }),
+        signal: ac.signal
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        error?: string;
+        code?: string;
+      };
 
       if (!res.ok) {
         setStatus("error");
         if (data.code === "NOT_CONFIGURED") {
           setErrorMessage(
-            "El envío no está configurado: en Vercel añade WEB3FORMS_ACCESS_KEY (recomendada) o NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY, o configura Resend. Mientras tanto, escríbenos a " +
+            "El envío no está configurado en el servidor (WEB3FORMS_ACCESS_KEY en Vercel). Escríbenos a " +
               contactData.email +
               "."
           );
         } else {
-          setErrorMessage(data.error || "No se pudo enviar el mensaje. Intenta de nuevo o escríbenos por correo.");
+          setErrorMessage(
+            data.error ||
+              "No se pudo enviar el mensaje. Si el problema continúa, escríbenos a " +
+                contactData.email +
+                "."
+          );
         }
         return;
       }
@@ -153,9 +106,11 @@ export function ContactForm({ web3AccessKey }: ContactFormProps) {
       const aborted = err instanceof Error && err.name === "AbortError";
       setErrorMessage(
         aborted
-          ? "El servidor tardó demasiado en responder. Intenta de nuevo o escríbenos a " + contactData.email + "."
+          ? "El servidor tardó demasiado. Intenta de nuevo o escríbenos a " + contactData.email + "."
           : "Error de red. Comprueba tu conexión o escríbenos a " + contactData.email + "."
       );
+    } finally {
+      clearTimeout(tid);
     }
   };
 
