@@ -3,6 +3,14 @@ import { NextResponse } from "next/server";
 const WEB3FORMS_URL = "https://api.web3forms.com/submit";
 const MOTIVES = new Set(["stand", "patrocinio", "informacion-general", "otro"]);
 
+/** Etiquetas legibles en el correo de Web3Forms (cada clave = una fila). */
+const MOTIVE_LABEL: Record<string, string> = {
+  stand: "Stand",
+  patrocinio: "Patrocinio",
+  "informacion-general": "Información general",
+  otro: "Otro"
+};
+
 function getAccessKey(): string {
   return (
     process.env.WEB3FORMS_ACCESS_KEY?.trim() ||
@@ -108,18 +116,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Correo no válido." }, { status: 400 });
     }
 
-    const message = [
-      `Teléfono: ${telefono}`,
-      `Motivo: ${motivo}`,
-      "",
-      mensaje
-    ].join("\n");
+    const motivoLegible = MOTIVE_LABEL[motivo] ?? motivo;
 
+    /**
+     * Web3Forms (plan gratuito) arma el correo listando cada campo.
+     * Reservados típicos: name, email, subject, message, from_name.
+     * El cuerpo principal va solo en `message`; el resto aparece como filas aparte.
+     */
     const result = await submitToWeb3Forms({
-      subject: `[Strategic Expo — Contacto web] ${motivo}`,
+      subject: `Contacto web · ${motivoLegible} · ${nombre}`,
       name: nombre,
       email: correo,
-      message
+      from_name: "Strategic Expo Group · Sitio web",
+      message: mensaje,
+      Telefono: telefono,
+      Motivo: motivoLegible,
+      Origen: "Formulario /contacto"
     });
 
     if (!result.ok) {
@@ -138,10 +150,12 @@ export async function POST(request: Request) {
     }
 
     const result = await submitToWeb3Forms({
-      subject: "[Strategic Expo — Newsletter] Nueva suscripción desde el footer",
-      name: "Newsletter (footer del sitio)",
+      subject: `Newsletter · nuevo suscriptor · ${email}`,
+      name: "Suscriptor newsletter",
       email,
-      message: `Solicitud de suscripción al newsletter.\nCorreo del suscriptor: ${email}`
+      from_name: "Strategic Expo Group · Sitio web",
+      message: "Solicitud de suscripción al boletín desde el pie de página.",
+      Fuente: "Footer del sitio (www.strategicexpogroup.com)"
     });
 
     if (!result.ok) {
