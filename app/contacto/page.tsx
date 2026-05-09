@@ -22,13 +22,13 @@ const topChannels: {
   value: string;
 }[] = [
   { variant: 0, icon: PhoneCall, label: "Línea directa", value: contactData.phone },
-  { variant: 1, icon: Mail, label: "Correo", value: contactData.email },
+  { variant: 1, icon: Mail, label: "Correo", value: contactData.brandEmail },
   { variant: 2, icon: Instagram, label: "Instagram", value: contactData.instagram },
   { variant: 3, icon: Globe, label: "Sitio web", value: contactData.website }
 ];
 
 const asideRows: { variant: Variant; label: string; value: string }[] = [
-  { variant: 0, label: "Correo", value: contactData.email },
+  { variant: 0, label: "Correo", value: contactData.brandEmail },
   { variant: 1, label: "Teléfono", value: contactData.phone },
   { variant: 2, label: "Instagram", value: contactData.instagram },
   { variant: 3, label: "Web", value: contactData.website },

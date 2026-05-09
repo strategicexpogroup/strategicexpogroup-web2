@@ -5,6 +5,21 @@ import { assetPaths } from "@/lib/assets";
 import { contactData, fairs } from "@/lib/data";
 import { FooterNewsletter } from "@/components/footer-newsletter";
 
+function TikTokIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden
+    >
+      <path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.465v13.655a2.896 2.896 0 0 1-5.201 1.743l-.002-.003a2.895 2.895 0 0 1 2.31-4.647 2.93 2.93 0 0 1 .88.127V9.4a6.84 6.84 0 0 0-1-.073A6.315 6.315 0 0 0 5 20.109a6.34 6.34 0 0 0 10.871-4.488v-7.02a8.155 8.155 0 0 0 4.773 1.522v-3.405a4.854 4.854 0 0 1-1.055-.108V6.686z" />
+    </svg>
+  );
+}
+
 export function Footer() {
   return (
     <footer className="mt-16 bg-brand-primary text-slate-200">
@@ -39,6 +54,15 @@ export function Footer() {
                 aria-label="Instagram"
               >
                 <Instagram size={16} />
+              </a>
+              <a
+                href="https://www.tiktok.com/@strategicexpogroup"
+                target="_blank"
+                rel="noreferrer"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white transition hover:bg-white/10"
+                aria-label="TikTok"
+              >
+                <TikTokIcon size={16} />
               </a>
               <a
                 href="https://linkedin.com"
