@@ -11,7 +11,8 @@ export const assetPaths = {
   images: {
     /** Imágenes de portada optimizadas en WebP */
     hero: "/assets/images/hero-banner-01.webp",
-    eventEducationCaribe: "/assets/images/event-education-caribe.webp"
+    eventEducationCaribe: "/assets/images/event-education-caribe.webp",
+    feriaEducacionCover: "/assets/images/feria-educacion-caribe-cover.webp"
   },
   /** Logos de aliados: preferir WebP; si no existe, el carrusel muestra el nombre */
   partners: (slug: string) => `/assets/logos/partners/partner-${slug}.webp`

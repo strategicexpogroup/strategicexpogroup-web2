@@ -43,4 +43,86 @@ a {
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  /**
+   * Hover con paleta Strategic Expo Group:
+   * verde #048240 · amarillo #e1e11e · celeste #17a3dd · azul #162134
+   */
+  @keyframes seg-glow-cycle {
+    0%,
+    100% {
+      box-shadow:
+        0 0 0 2px #048240,
+        0 14px 36px rgba(4, 130, 64, 0.28);
+    }
+    25% {
+      box-shadow:
+        0 0 0 2px #e1e11e,
+        0 14px 36px rgba(225, 225, 30, 0.22);
+    }
+    50% {
+      box-shadow:
+        0 0 0 2px #17a3dd,
+        0 14px 36px rgba(23, 163, 221, 0.28);
+    }
+    75% {
+      box-shadow:
+        0 0 0 2px #162134,
+        0 14px 36px rgba(22, 33, 52, 0.32);
+    }
+  }
+
+  @keyframes seg-shimmer {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 200% 50%;
+    }
+  }
+
+  .seg-brand-hover {
+    @apply transition-shadow duration-300 ease-out;
+  }
+
+  .seg-brand-hover:hover {
+    animation: seg-glow-cycle 2.4s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .seg-brand-hover:hover {
+      animation: none;
+    }
+  }
+
+  /** Enlaces / bloques con barra inferior animada con la paleta */
+  .seg-link-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .seg-link-shimmer::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+    background: linear-gradient(90deg, #048240, #e1e11e, #17a3dd, #162134, #048240);
+    background-size: 200% 100%;
+  }
+
+  .seg-link-shimmer:hover::after {
+    transform: scaleX(1);
+    animation: seg-shimmer 2s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .seg-link-shimmer:hover::after {
+      animation: none;
+    }
+  }
 }

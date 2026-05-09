@@ -21,6 +21,7 @@ import { SectionReveal } from "@/components/section-reveal";
 import { StaggerGrid, StaggerItem } from "@/components/stagger-grid";
 import { assetPaths } from "@/lib/assets";
 import { fairs, partners, serviceLines } from "@/lib/data";
+import { serviceLineBackgroundImages } from "@/lib/service-line-images";
 
 const icons = [
   Building2,
@@ -61,12 +62,28 @@ export default function HomePage() {
         <StaggerGrid className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           {serviceLines.map((item, index) => {
             const Icon = icons[index];
+            const bgSrc = serviceLineBackgroundImages[index] ?? assetPaths.images.hero;
             return (
               <StaggerItem key={item.title}>
-                <article className="card-elevated flex h-full flex-col rounded-xl p-5 text-center xl:text-left">
-                  <Icon className="mx-auto text-brand-primary xl:mx-0" size={26} strokeWidth={1.75} />
-                  <h3 className="mt-3 text-sm font-bold text-brand-primary">{item.title}</h3>
-                  <p className="mt-2 text-xs leading-relaxed text-brand-muted">{item.description}</p>
+                <article className="seg-brand-hover group relative flex min-h-[260px] flex-col overflow-hidden rounded-xl border border-slate-200/70 shadow-sm transition-transform duration-300 hover:-translate-y-1">
+                  <Image
+                    src={bgSrc}
+                    alt=""
+                    fill
+                    className="object-cover transition duration-700 ease-out group-hover:scale-[1.06]"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1280px) 33vw, 16vw"
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#162134]/95 via-[#162134]/55 to-[#17a3dd]/30 transition duration-500 group-hover:from-[#048240]/85 group-hover:via-[#162134]/65 group-hover:to-[#17a3dd]/45"
+                    aria-hidden
+                  />
+                  <div className="relative z-10 flex h-full min-h-[260px] flex-col justify-end p-5 text-center xl:text-left">
+                    <Icon className="mx-auto text-white drop-shadow-md xl:mx-0" size={26} strokeWidth={1.75} aria-hidden />
+                    <h3 className="mt-3 text-sm font-bold uppercase tracking-wide text-white drop-shadow-sm">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-xs leading-relaxed text-white/90">{item.description}</p>
+                  </div>
                 </article>
               </StaggerItem>
             );
@@ -76,7 +93,7 @@ export default function HomePage() {
 
       <SectionReveal className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 sm:pb-14 lg:px-8 lg:pb-16" delay={0.05}>
         <h2 className="text-center text-2xl font-bold text-brand-primary md:text-3xl">Nuestras ferias</h2>
-        <div className="mt-8 overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-soft">
+        <div className="seg-brand-hover mt-8 overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-soft">
           <div className="grid lg:grid-cols-12 lg:gap-0">
             <div className="flex flex-col justify-center gap-5 border-b border-slate-100 p-8 lg:col-span-5 lg:border-b-0 lg:border-r lg:p-10">
               <Image
@@ -108,13 +125,13 @@ export default function HomePage() {
                 </li>
               </ul>
               <div className="flex flex-wrap gap-3 pt-2">
-                <Link href="/contacto?motivo=stand" className="btn-primary px-4 py-2 text-sm">
+                <Link href="/contacto?motivo=stand" className="seg-brand-hover btn-primary px-4 py-2 text-sm">
                   Solicitar stand
                 </Link>
-                <Link href={`/nuestras-ferias/${featuredFair.slug}`} className="btn-accent px-4 py-2 text-sm">
+                <Link href={`/nuestras-ferias/${featuredFair.slug}`} className="seg-brand-hover btn-accent px-4 py-2 text-sm">
                   Ver feria
                 </Link>
-                <Link href="/contacto?motivo=patrocinio" className="btn-secondary bg-transparent px-4 py-2 text-sm">
+                <Link href="/contacto?motivo=patrocinio" className="seg-brand-hover btn-secondary bg-transparent px-4 py-2 text-sm">
                   Ser patrocinador
                 </Link>
               </div>
@@ -162,22 +179,34 @@ export default function HomePage() {
       </SectionReveal>
 
       <SectionReveal className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 sm:pb-14 lg:px-8 lg:pb-20" delay={0.09}>
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
+        <div className="seg-brand-hover rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
           <h2 className="text-lg font-bold text-brand-primary sm:text-xl">Explora Strategic Expo Group</h2>
           <p className="mt-2 text-sm text-brand-muted">
             Accesos directos a las secciones clave para que la navegación sea más rápida en móvil y escritorio.
           </p>
           <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <Link href="/nosotros" className="flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition hover:bg-slate-50">
+            <Link
+              href="/nosotros"
+              className="seg-link-shimmer seg-brand-hover flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition-colors hover:bg-slate-50"
+            >
               Nosotros <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link href="/nuestras-ferias" className="flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition hover:bg-slate-50">
+            <Link
+              href="/nuestras-ferias"
+              className="seg-link-shimmer seg-brand-hover flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition-colors hover:bg-slate-50"
+            >
               Ferias <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link href="/patrocinadores" className="flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition hover:bg-slate-50">
+            <Link
+              href="/patrocinadores"
+              className="seg-link-shimmer seg-brand-hover flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition-colors hover:bg-slate-50"
+            >
               Patrocinadores <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link href="/stands" className="flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition hover:bg-slate-50">
+            <Link
+              href="/stands"
+              className="seg-link-shimmer seg-brand-hover flex items-center justify-between rounded-xl border border-slate-200 p-3 text-sm font-semibold text-brand-primary transition-colors hover:bg-slate-50"
+            >
               Stands <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -185,7 +214,7 @@ export default function HomePage() {
       </SectionReveal>
 
       <SectionReveal className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 sm:pb-16 lg:px-8 lg:pb-20" delay={0.1}>
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-brand-accent to-teal-600 px-6 py-12 text-white shadow-xl sm:px-10 lg:flex lg:items-center lg:justify-between lg:gap-8 lg:py-14">
+        <div className="seg-brand-hover relative overflow-hidden rounded-3xl bg-gradient-to-r from-brand-accent to-teal-600 px-6 py-12 text-white shadow-xl sm:px-10 lg:flex lg:items-center lg:justify-between lg:gap-8 lg:py-14">
           <div className="flex flex-col items-center gap-6 text-center lg:flex-row lg:text-left">
             <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white/15 ring-1 ring-white/30">
               <Users className="h-8 w-8" aria-hidden />
@@ -199,7 +228,7 @@ export default function HomePage() {
           </div>
           <Link
             href="/contacto"
-            className="btn-ghost-light mt-8 inline-flex px-8 py-3 lg:mt-0"
+            className="seg-brand-hover btn-ghost-light mt-8 inline-flex px-8 py-3 lg:mt-0"
           >
             Contáctanos
           </Link>
