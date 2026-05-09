@@ -33,7 +33,7 @@ const asideRows: { variant: Variant; label: string; value: string }[] = [
   { variant: 1, label: "Teléfono", value: contactData.phone },
   { variant: 2, label: "Instagram", value: contactData.instagram },
   { variant: 3, label: "Web", value: contactData.website },
-  { variant: 0, label: "Ciudad base", value: contactData.address }
+  { variant: 0, label: "Ciudad", value: contactData.address }
 ];
 
 export default function ContactoPage() {

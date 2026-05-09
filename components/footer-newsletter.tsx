@@ -30,38 +30,51 @@ export function FooterNewsletter({ web3AccessKey }: FooterNewsletterProps) {
 
         const web3Key = resolveWeb3AccessKey(web3AccessKey);
         if (web3Key) {
-          const { ok, message } = await postWeb3Forms(
-            {
-              subject: "[Strategic Expo — Newsletter] Nueva suscripción desde el footer",
-              name: "Newsletter (footer del sitio)",
-              email,
-              message: `Solicitud de suscripción al newsletter.\nCorreo del suscriptor: ${email}`
-            },
-            web3AccessKey
-          );
-
-          if (!ok) {
-            setStatus("error");
-            setErrorMessage(
-              message === "NO_PUBLIC_KEY"
-                ? "Falta WEB3FORMS_ACCESS_KEY o NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY en Vercel (y redeploy)."
-                : message || "No se pudo registrar. Intenta de nuevo."
+          try {
+            const { ok, message } = await postWeb3Forms(
+              {
+                subject: "[Strategic Expo — Newsletter] Nueva suscripción desde el footer",
+                name: "Newsletter (footer del sitio)",
+                email,
+                message: `Solicitud de suscripción al newsletter.\nCorreo del suscriptor: ${email}`
+              },
+              web3AccessKey
             );
-            return;
-          }
 
-          setStatus("success");
-          setEmail("");
-          setSegHp("");
+            if (!ok) {
+              setStatus("error");
+              setErrorMessage(
+                message === "NO_PUBLIC_KEY"
+                  ? "Falta WEB3FORMS_ACCESS_KEY o NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY en Vercel (y redeploy)."
+                  : message || "No se pudo registrar. Intenta de nuevo."
+              );
+              return;
+            }
+
+            setStatus("success");
+            setEmail("");
+            setSegHp("");
+          } catch {
+            setStatus("error");
+            setErrorMessage("Error al enviar. Prueba sin bloqueadores o escríbenos a " + contactData.email + ".");
+          }
           return;
         }
 
         try {
-          const res = await fetch("/api/newsletter", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, _seg_hp: segHp })
-          });
+          const ac = new AbortController();
+          const tid = setTimeout(() => ac.abort(), 22_000);
+          let res: Response;
+          try {
+            res = await fetch("/api/newsletter", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, _seg_hp: segHp }),
+              signal: ac.signal
+            });
+          } finally {
+            clearTimeout(tid);
+          }
           const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string; code?: string };
 
           if (!res.ok) {
@@ -81,9 +94,14 @@ export function FooterNewsletter({ web3AccessKey }: FooterNewsletterProps) {
           setStatus("success");
           setEmail("");
           setSegHp("");
-        } catch {
+        } catch (err) {
           setStatus("error");
-          setErrorMessage("Error de red. Intenta más tarde o escríbenos a " + contactData.email + ".");
+          const aborted = err instanceof Error && err.name === "AbortError";
+          setErrorMessage(
+            aborted
+              ? "Tiempo de espera agotado. Intenta de nuevo."
+              : "Error de red. Intenta más tarde o escríbenos a " + contactData.email + "."
+          );
         }
       }}
       aria-label="Newsletter"

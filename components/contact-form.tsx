@@ -62,52 +62,67 @@ export function ContactForm({ web3AccessKey }: ContactFormProps) {
 
     const web3Key = resolveWeb3AccessKey(web3AccessKey);
     if (web3Key) {
-      const { ok, message } = await postWeb3Forms(
-        {
-          subject: `[Strategic Expo — Contacto web] ${formData.motivo}`,
-          name: formData.nombre,
-          email: formData.correo,
-          message: [
-            `Teléfono: ${formData.telefono}`,
-            `Motivo: ${formData.motivo}`,
-            "",
-            formData.mensaje
-          ].join("\n")
-        },
-        web3AccessKey
-      );
+      try {
+        const { ok, message } = await postWeb3Forms(
+          {
+            subject: `[Strategic Expo — Contacto web] ${formData.motivo}`,
+            name: formData.nombre,
+            email: formData.correo,
+            message: [
+              `Teléfono: ${formData.telefono}`,
+              `Motivo: ${formData.motivo}`,
+              "",
+              formData.mensaje
+            ].join("\n")
+          },
+          web3AccessKey
+        );
 
-      if (!ok) {
+        if (!ok) {
+          setStatus("error");
+          setErrorMessage(
+            message === "NO_PUBLIC_KEY"
+              ? "Falta la clave de Web3Forms: en Vercel define WEB3FORMS_ACCESS_KEY o NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY y vuelve a desplegar."
+              : message || "No se pudo enviar. Intenta de nuevo o escríbenos a " + contactData.email + "."
+          );
+          return;
+        }
+
+        setStatus("success");
+        setFormData({
+          nombre: "",
+          correo: "",
+          telefono: "",
+          mensaje: "",
+          motivo: motivoInicial
+        });
+        setSegHp("");
+      } catch {
         setStatus("error");
         setErrorMessage(
-          message === "NO_PUBLIC_KEY"
-            ? "Falta la clave de Web3Forms: en Vercel define WEB3FORMS_ACCESS_KEY o NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY y vuelve a desplegar."
-            : message || "No se pudo enviar. Intenta de nuevo o escríbenos a " + contactData.email + "."
+          "Error inesperado al enviar. Prueba sin extensiones de bloqueo, o escríbenos a " + contactData.email + "."
         );
-        return;
       }
-
-      setStatus("success");
-      setFormData({
-        nombre: "",
-        correo: "",
-        telefono: "",
-        mensaje: "",
-        motivo: motivoInicial
-      });
-      setSegHp("");
       return;
     }
 
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          _seg_hp: segHp
-        })
-      });
+      const ac = new AbortController();
+      const tid = setTimeout(() => ac.abort(), 22_000);
+      let res: Response;
+      try {
+        res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...formData,
+            _seg_hp: segHp
+          }),
+          signal: ac.signal
+        });
+      } finally {
+        clearTimeout(tid);
+      }
       const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string; code?: string };
 
       if (!res.ok) {
@@ -133,9 +148,14 @@ export function ContactForm({ web3AccessKey }: ContactFormProps) {
         motivo: motivoInicial
       });
       setSegHp("");
-    } catch {
+    } catch (err) {
       setStatus("error");
-      setErrorMessage("Error de red. Comprueba tu conexión o escríbenos a " + contactData.email + ".");
+      const aborted = err instanceof Error && err.name === "AbortError";
+      setErrorMessage(
+        aborted
+          ? "El servidor tardó demasiado en responder. Intenta de nuevo o escríbenos a " + contactData.email + "."
+          : "Error de red. Comprueba tu conexión o escríbenos a " + contactData.email + "."
+      );
     }
   };
 

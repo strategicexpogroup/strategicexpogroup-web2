@@ -198,8 +198,10 @@ export const fairs: Fair[] = [
 ];
 
 export const contactData = {
-  /** Correo visible en el sitio y mensajes de error; provisional hasta confirmar Strategicexpogroup@gmail.com en Web3Forms. */
+  /** Correo operativo (página Contacto, avisos de error del formulario / Web3Forms provisional). */
   email: "josejaviercol7@gmail.com",
+  /** Correo corporativo mostrado en el pie de página (Contáctanos). */
+  brandEmail: "Strategicexpogroup@gmail.com",
   phone: "+57 314 577 4050",
   instagram: "@strategicexpogroup",
   website: "www.strategicexpogroup.com",
