@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { CalendarFold, MapPin, SquareArrowOutUpRight } from "lucide-react";
@@ -22,33 +23,48 @@ export default function NuestrasFeriasPage() {
         <StaggerGrid className="mt-6 grid gap-4 md:grid-cols-2">
         {fairs.map((fair) => (
           <StaggerItem key={fair.slug}>
-            <article className="card-elevated p-6">
-              <div className="flex flex-wrap items-center gap-2">
-                <div className="inline-flex rounded-full bg-brand-primary/10 px-3 py-1 text-xs font-semibold text-brand-primary">
-                  {fair.dateLabel}
-                </div>
-                <span className="inline-flex items-center gap-1 text-xs font-medium text-brand-muted">
-                  <MapPin className="h-3.5 w-3.5" aria-hidden />
-                  {fair.location}
-                </span>
+            <article className="card-elevated grid overflow-hidden md:grid-cols-2">
+              <div className="relative aspect-[16/10] min-h-[180px] w-full md:aspect-auto md:min-h-[260px]">
+                <Image
+                  src={fair.featuredImage}
+                  alt={`Portada — ${fair.name}`}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#162134]/45 via-transparent to-transparent md:bg-gradient-to-r"
+                  aria-hidden
+                />
               </div>
-              <h2 className="mt-4 text-xl font-bold text-brand-text">
-                {fair.name} – {fair.tagline}
-              </h2>
-              <p className="mt-3 text-sm text-brand-muted">{fair.shortDescription}</p>
-              <div className="mt-4 grid grid-cols-2 gap-2">
-                <div className="rounded-lg bg-slate-50 px-3 py-2 text-xs font-semibold text-brand-primary">
-                  <CalendarFold className="mb-1 h-4 w-4" aria-hidden />
-                  Agenda activa
+              <div className="flex flex-col p-6">
+                <div className="flex flex-wrap items-center gap-2">
+                  <div className="inline-flex rounded-full bg-brand-primary/10 px-3 py-1 text-xs font-semibold text-brand-primary">
+                    {fair.dateLabel}
+                  </div>
+                  <span className="inline-flex items-center gap-1 text-xs font-medium text-brand-muted">
+                    <MapPin className="h-3.5 w-3.5" aria-hidden />
+                    {fair.location}
+                  </span>
                 </div>
-                <div className="rounded-lg bg-slate-50 px-3 py-2 text-xs font-semibold text-brand-primary">
-                  <SquareArrowOutUpRight className="mb-1 h-4 w-4" aria-hidden />
-                  Oportunidad comercial
+                <h2 className="mt-4 text-xl font-bold text-brand-text">
+                  {fair.name} – {fair.tagline}
+                </h2>
+                <p className="mt-3 flex-1 text-sm text-brand-muted">{fair.shortDescription}</p>
+                <div className="mt-4 grid grid-cols-2 gap-2">
+                  <div className="rounded-lg bg-slate-50 px-3 py-2 text-xs font-semibold text-brand-primary">
+                    <CalendarFold className="mb-1 h-4 w-4" aria-hidden />
+                    Agenda activa
+                  </div>
+                  <div className="rounded-lg bg-slate-50 px-3 py-2 text-xs font-semibold text-brand-primary">
+                    <SquareArrowOutUpRight className="mb-1 h-4 w-4" aria-hidden />
+                    Oportunidad comercial
+                  </div>
                 </div>
+                <Link href={`/nuestras-ferias/${fair.slug}`} className="btn-primary mt-5 w-fit px-4 py-2">
+                  Ver detalle
+                </Link>
               </div>
-              <Link href={`/nuestras-ferias/${fair.slug}`} className="btn-primary mt-5 px-4 py-2">
-                Ver detalle
-              </Link>
             </article>
           </StaggerItem>
         ))}
