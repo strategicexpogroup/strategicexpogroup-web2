@@ -1,5 +1,20 @@
 import type { Metadata } from "next";
-import { BadgeCheck, Building2, Flag, Lightbulb, Target, Trophy } from "lucide-react";
+import {
+  Award,
+  BadgeCheck,
+  Building2,
+  Flag,
+  Handshake,
+  LampDesk,
+  LayoutTemplate,
+  Lightbulb,
+  MapPin,
+  PenLine,
+  Printer,
+  Shield,
+  Target,
+  Trophy
+} from "lucide-react";
 import { SectionReveal } from "@/components/section-reveal";
 import { companyData } from "@/lib/data";
 
@@ -9,7 +24,25 @@ export const metadata: Metadata = {
     "Conoce quiénes somos en Strategic Expo Group: misión, visión, valores corporativos y líneas de negocio."
 };
 
+const valueIcons = [Lightbulb, Award, Shield, MapPin, Handshake] as const;
+const businessLineIcons = [PenLine, LayoutTemplate, LampDesk, Printer] as const;
+
+function variantFor(index: number, offset: number): 0 | 1 | 2 | 3 {
+  return ((index + offset) % 4) as 0 | 1 | 2 | 3;
+}
+
 export default function NosotrosPage() {
+  const valueRows = companyData.values.map((text, i) => ({
+    text,
+    icon: valueIcons[i % valueIcons.length],
+    variant: variantFor(i, 0)
+  }));
+  const lineRows = companyData.businessLines.map((text, i) => ({
+    text,
+    icon: businessLineIcons[i % businessLineIcons.length],
+    variant: variantFor(i, 2)
+  }));
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
       <SectionReveal className="rounded-3xl bg-gradient-to-r from-brand-primary to-sky-900 px-6 py-8 text-white sm:px-8 sm:py-10">
@@ -53,26 +86,32 @@ export default function NosotrosPage() {
         </article>
       </SectionReveal>
 
-      <SectionReveal className="mt-6 rounded-2xl border border-slate-200 bg-white p-6" delay={0.1}>
-        <h2 className="text-lg font-bold text-brand-primary">Valores corporativos</h2>
-        <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-          {companyData.values.map((value) => (
-            <li key={value} className="rounded-lg bg-slate-50 px-4 py-3 text-sm font-medium text-brand-text">
-              {value}
-            </li>
-          ))}
-        </ul>
-      </SectionReveal>
+      <SectionReveal className="mt-6 grid gap-6 lg:grid-cols-2" delay={0.1}>
+        {/* Izquierda: valores corporativos */}
+        <article className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-7">
+          <h2 className="text-lg font-bold text-brand-primary">Valores corporativos</h2>
+          <ul className="mt-5 flex flex-col gap-3">
+            {valueRows.map(({ text, icon: Icon, variant }) => (
+              <li key={text} tabIndex={0} data-variant={variant} className="nosotros-pill">
+                <Icon className="nosotros-pill-icon h-5 w-5" strokeWidth={1.85} aria-hidden />
+                <span>{text}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
 
-      <SectionReveal className="mt-6 rounded-2xl border border-slate-200 bg-white p-6" delay={0.12}>
-        <h2 className="text-lg font-bold text-brand-primary">Líneas de negocio</h2>
-        <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-          {companyData.businessLines.map((line) => (
-            <li key={line} className="rounded-lg bg-slate-50 px-4 py-3 text-sm font-medium text-brand-text">
-              {line}
-            </li>
-          ))}
-        </ul>
+        {/* Derecha: líneas de negocio */}
+        <article className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-7">
+          <h2 className="text-lg font-bold text-brand-primary">Líneas de negocio</h2>
+          <ul className="mt-5 flex flex-col gap-3">
+            {lineRows.map(({ text, icon: Icon, variant }) => (
+              <li key={text} tabIndex={0} data-variant={variant} className="nosotros-pill">
+                <Icon className="nosotros-pill-icon h-5 w-5" strokeWidth={1.85} aria-hidden />
+                <span>{text}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
       </SectionReveal>
     </div>
   );

@@ -57,6 +57,7 @@ Carpeta: **`public/assets/images/service-lines/`**. Rutas en código: `assetPath
 |---------|------|---------|--------------------|-----|
 | `feria-educacion-caribe-cover.webp` | `assets/images/feria-educacion-caribe-cover.webp` | WebP | **1200 × 630 px** (OG/social) o **1600 × 900** | Portada feria, tarjetas |
 | `event-education-caribe.webp` | `assets/images/event-education-caribe.webp` | WebP | **800 × 1000 px** (retrato) | Bloques laterales, Stands |
+| `contacto-mapa-presencia.webp` | `assets/images/contacto-mapa-presencia.webp` | WebP | **1600 × 1000 px** (16:10) | Página **Contacto** — mapa bajo «Información directa» (`assetPaths.images.contactPresenceMap`) |
 
 ---
 

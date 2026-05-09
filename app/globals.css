@@ -231,30 +231,39 @@ a {
     }
   }
 
-  /** Carrusel infinito de logos (aliados estratégicos) */
+  /**
+   * Carrusel infinito de logos (aliados estratégicos).
+   * El track en React repite el mismo bloque de logos N veces (p. ej. 4) en UNA sola fila;
+   * el porcentaje debe ser 100/N para que al reiniciar la animación no se note corte.
+   */
   @keyframes partner-marquee {
     from {
       transform: translateX(0);
     }
     to {
-      transform: translateX(-50%);
+      transform: translateX(var(--partner-marquee-shift, -25%));
     }
   }
 
   .partner-marquee-viewport {
+    width: 100%;
+    overflow: hidden;
     -webkit-mask-image: linear-gradient(
       90deg,
       transparent,
-      #000 6%,
-      #000 94%,
+      #000 5%,
+      #000 95%,
       transparent
     );
-    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
   }
 
   .partner-marquee-track {
     display: inline-flex;
+    flex-wrap: nowrap;
+    align-items: center;
     width: max-content;
+    white-space: nowrap;
     animation: partner-marquee var(--partner-marquee-duration, 45s) linear infinite;
     will-change: transform;
   }
@@ -266,11 +275,190 @@ a {
   @media (prefers-reduced-motion: reduce) {
     .partner-marquee-track {
       animation: none;
-      flex-wrap: wrap;
-      justify-content: center;
-      width: 100%;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      overflow-x: auto;
       max-width: 100%;
-      row-gap: 1rem;
+      scrollbar-width: thin;
+    }
+  }
+
+  /** Paleta interactiva (#048240 #e1e11e #17a3dd #162134) — Nosotros + Contacto */
+  .contact-channel-card {
+    @apply cursor-default rounded-xl border border-slate-200 bg-white text-left outline-none shadow-sm;
+    transition:
+      transform 0.2s ease,
+      border-color 0.28s ease,
+      background-color 0.28s ease,
+      box-shadow 0.28s ease;
+  }
+
+  .contact-channel-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .contact-channel-card:focus-visible {
+    @apply ring-2 ring-[#17a3dd]/50 ring-offset-2;
+  }
+
+  .contact-channel-card-icon {
+    @apply shrink-0 text-brand-primary transition-colors duration-300;
+  }
+
+  .nosotros-pill {
+    @apply flex cursor-default items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 text-left text-sm font-medium text-brand-text outline-none;
+    transition:
+      transform 0.2s ease,
+      border-color 0.28s ease,
+      background-color 0.28s ease,
+      box-shadow 0.28s ease;
+  }
+
+  .nosotros-pill:hover {
+    transform: translateY(-2px);
+  }
+
+  .nosotros-pill:focus-visible {
+    @apply ring-2 ring-[#17a3dd]/50 ring-offset-2;
+  }
+
+  .nosotros-pill[data-variant="0"]:hover,
+  .contact-channel-card[data-variant="0"]:hover {
+    border-color: #048240;
+    background-color: rgba(4, 130, 64, 0.09);
+    box-shadow: 0 10px 28px rgba(4, 130, 64, 0.18);
+  }
+
+  .nosotros-pill[data-variant="1"]:hover,
+  .contact-channel-card[data-variant="1"]:hover {
+    border-color: #e1e11e;
+    background-color: rgba(225, 225, 30, 0.12);
+    box-shadow: 0 10px 28px rgba(225, 225, 30, 0.2);
+  }
+
+  .nosotros-pill[data-variant="2"]:hover,
+  .contact-channel-card[data-variant="2"]:hover {
+    border-color: #17a3dd;
+    background-color: rgba(23, 163, 221, 0.1);
+    box-shadow: 0 10px 28px rgba(23, 163, 221, 0.22);
+  }
+
+  .nosotros-pill[data-variant="3"]:hover,
+  .contact-channel-card[data-variant="3"]:hover {
+    border-color: #162134;
+    background-color: rgba(22, 33, 52, 0.07);
+    box-shadow: 0 10px 28px rgba(22, 33, 52, 0.2);
+  }
+
+  .nosotros-pill[data-variant="0"]:active,
+  .contact-channel-card[data-variant="0"]:active {
+    transform: translateY(0) scale(0.99);
+    box-shadow: 0 0 0 2px #048240, 0 8px 24px rgba(4, 130, 64, 0.25);
+  }
+
+  .nosotros-pill[data-variant="1"]:active,
+  .contact-channel-card[data-variant="1"]:active {
+    transform: translateY(0) scale(0.99);
+    box-shadow: 0 0 0 2px #e1e11e, 0 8px 24px rgba(225, 225, 30, 0.22);
+  }
+
+  .nosotros-pill[data-variant="2"]:active,
+  .contact-channel-card[data-variant="2"]:active {
+    transform: translateY(0) scale(0.99);
+    box-shadow: 0 0 0 2px #17a3dd, 0 8px 24px rgba(23, 163, 221, 0.25);
+  }
+
+  .nosotros-pill[data-variant="3"]:active,
+  .contact-channel-card[data-variant="3"]:active {
+    transform: translateY(0) scale(0.99);
+    box-shadow: 0 0 0 2px #162134, 0 8px 24px rgba(22, 33, 52, 0.22);
+  }
+
+  .nosotros-pill-icon {
+    @apply mt-0.5 shrink-0 text-brand-primary transition-colors duration-300;
+  }
+
+  .nosotros-pill[data-variant="0"]:hover .nosotros-pill-icon,
+  .contact-channel-card[data-variant="0"]:hover .contact-channel-card-icon {
+    color: #048240;
+  }
+
+  .nosotros-pill[data-variant="1"]:hover .nosotros-pill-icon,
+  .contact-channel-card[data-variant="1"]:hover .contact-channel-card-icon {
+    color: #b8b80f;
+  }
+
+  .nosotros-pill[data-variant="2"]:hover .nosotros-pill-icon,
+  .contact-channel-card[data-variant="2"]:hover .contact-channel-card-icon {
+    color: #17a3dd;
+  }
+
+  .nosotros-pill[data-variant="3"]:hover .nosotros-pill-icon,
+  .contact-channel-card[data-variant="3"]:hover .contact-channel-card-icon {
+    color: #162134;
+  }
+
+  /** Formulario contacto — borde / halo al hover y focus según variante */
+  .contact-field[data-variant="0"]:hover input,
+  .contact-field[data-variant="0"]:hover textarea,
+  .contact-field[data-variant="0"]:hover select {
+    border-color: rgba(4, 130, 64, 0.55);
+  }
+
+  .contact-field[data-variant="1"]:hover input,
+  .contact-field[data-variant="1"]:hover textarea,
+  .contact-field[data-variant="1"]:hover select {
+    border-color: rgba(225, 225, 30, 0.75);
+  }
+
+  .contact-field[data-variant="2"]:hover input,
+  .contact-field[data-variant="2"]:hover textarea,
+  .contact-field[data-variant="2"]:hover select {
+    border-color: rgba(23, 163, 221, 0.65);
+  }
+
+  .contact-field[data-variant="3"]:hover input,
+  .contact-field[data-variant="3"]:hover textarea,
+  .contact-field[data-variant="3"]:hover select {
+    border-color: rgba(22, 33, 52, 0.45);
+  }
+
+  .contact-field[data-variant="0"]:focus-within input,
+  .contact-field[data-variant="0"]:focus-within textarea,
+  .contact-field[data-variant="0"]:focus-within select {
+    border-color: #048240;
+    box-shadow: 0 0 0 2px rgba(4, 130, 64, 0.2);
+  }
+
+  .contact-field[data-variant="1"]:focus-within input,
+  .contact-field[data-variant="1"]:focus-within textarea,
+  .contact-field[data-variant="1"]:focus-within select {
+    border-color: #c4c415;
+    box-shadow: 0 0 0 2px rgba(225, 225, 30, 0.25);
+  }
+
+  .contact-field[data-variant="2"]:focus-within input,
+  .contact-field[data-variant="2"]:focus-within textarea,
+  .contact-field[data-variant="2"]:focus-within select {
+    border-color: #17a3dd;
+    box-shadow: 0 0 0 2px rgba(23, 163, 221, 0.22);
+  }
+
+  .contact-field[data-variant="3"]:focus-within input,
+  .contact-field[data-variant="3"]:focus-within textarea,
+  .contact-field[data-variant="3"]:focus-within select {
+    border-color: #162134;
+    box-shadow: 0 0 0 2px rgba(22, 33, 52, 0.18);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nosotros-pill:hover,
+    .contact-channel-card:hover {
+      transform: none;
+    }
+    .nosotros-pill:active,
+    .contact-channel-card:active {
+      transform: none;
     }
   }
 }

@@ -12,7 +12,9 @@ export const assetPaths = {
     /** Imágenes de portada optimizadas en WebP */
     hero: "/assets/images/hero-banner-01.webp",
     eventEducationCaribe: "/assets/images/event-education-caribe.webp",
-    feriaEducacionCover: "/assets/images/feria-educacion-caribe-cover.webp"
+    feriaEducacionCover: "/assets/images/feria-educacion-caribe-cover.webp",
+    /** Mapa de presencia / cobertura — página Contacto */
+    contactPresenceMap: "/assets/images/contacto-mapa-presencia.webp"
   },
   /**
    * Inicio — sección «Nuestras líneas» (`public/assets/images/service-lines/`).
