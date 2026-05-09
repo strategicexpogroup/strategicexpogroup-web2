@@ -23,21 +23,21 @@ export default function NuestrasFeriasPage() {
         <StaggerGrid className="mt-6 grid gap-4 md:grid-cols-2">
         {fairs.map((fair) => (
           <StaggerItem key={fair.slug}>
-            <article className="card-elevated grid overflow-hidden md:grid-cols-2">
-              <div className="relative aspect-[16/10] min-h-[180px] w-full md:aspect-auto md:min-h-[260px]">
+            <article className="card-elevated grid overflow-hidden md:grid-cols-5">
+              <div className="relative aspect-[3/4] min-h-[200px] w-full md:col-span-2 md:aspect-[4/5] md:min-h-[260px]">
                 <Image
-                  src={fair.featuredImage}
-                  alt={`Portada — ${fair.name}`}
+                  src={fair.listCardImage ?? fair.featuredImage}
+                  alt={`Imagen — ${fair.name}`}
                   fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover object-center"
+                  sizes="(max-width: 768px) 100vw, 40vw"
                 />
                 <div
                   className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#162134]/45 via-transparent to-transparent md:bg-gradient-to-r"
                   aria-hidden
                 />
               </div>
-              <div className="flex flex-col p-6">
+              <div className="flex flex-col p-6 md:col-span-3">
                 <div className="flex flex-wrap items-center gap-2">
                   <div className="inline-flex rounded-full bg-brand-primary/10 px-3 py-1 text-xs font-semibold text-brand-primary">
                     {fair.dateLabel}

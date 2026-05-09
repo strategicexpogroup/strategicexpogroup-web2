@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { CalendarDays, Newspaper, Sparkles, TrendingUp } from "lucide-react";
+import { NoticiasBannerMarquee } from "@/components/noticias-banner-marquee";
 import { SectionReveal } from "@/components/section-reveal";
 
 export const metadata: Metadata = {
@@ -41,6 +42,10 @@ export default function NoticiasPage() {
         <p className="mt-3 max-w-3xl text-sm text-brand-muted sm:text-base">
           Publicaremos avances de ferias, alianzas, tendencias y contenido útil para expositores y aliados estratégicos.
         </p>
+      </SectionReveal>
+
+      <SectionReveal className="mt-6" delay={0.02}>
+        <NoticiasBannerMarquee />
       </SectionReveal>
 
       <SectionReveal className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" delay={0.04}>

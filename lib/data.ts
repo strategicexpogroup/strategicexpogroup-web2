@@ -19,7 +19,10 @@ export type Fair = {
   slug: string;
   name: string;
   tagline: string;
+  /** Portada horizontal — OG, hero en detalle de feria */
   featuredImage: string;
+  /** Imagen más vertical para la tarjeta en `/nuestras-ferias` (si no se define, se usa `featuredImage`) */
+  listCardImage?: string;
   dateLabel: string;
   upcomingLabel: string;
   location: string;
@@ -119,8 +122,8 @@ export const fairs: Fair[] = [
     upcomingLabel: "19-21 OCT 2026",
     location:
       "Cubo de Cristal (Plaza de la Paz), Barranquilla, Atlántico.",
-    featuredImage:
-      "/assets/images/feria-educacion-caribe-cover.webp",
+    featuredImage: "/assets/images/feria-educacion-caribe-cover.webp",
+    listCardImage: "/assets/images/event-education-caribe.webp",
     shortDescription:
       "La plataforma que reúne las mejores oportunidades de educación superior, formación técnica, programas internacionales y financiamiento educativo para jóvenes del Caribe colombiano.",
     longDescription:
