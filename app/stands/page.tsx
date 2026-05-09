@@ -46,18 +46,18 @@ const standServices = [
 
 const galleryImages = [
   {
-    src: assetPaths.images.hero,
-    alt: "Ambiente de feria y montaje de stands",
+    src: assetPaths.images.standsGallery01,
+    alt: "Montaje y diseño de stands para ferias",
     sizes: "(max-width: 1024px) 100vw, 40vw"
   },
   {
-    src: assetPaths.images.eventEducationCaribe,
-    alt: "Evento corporativo Strategic Expo Group",
+    src: assetPaths.images.standsGallery02,
+    alt: "Stand modular en evento corporativo",
     sizes: "(max-width: 1024px) 50vw, 20vw"
   },
   {
-    src: assetPaths.images.feriaEducacionCover,
-    alt: "Experiencia de marca en exposición",
+    src: assetPaths.images.standsGallery03,
+    alt: "Experiencia de marca en espacio de exposición",
     sizes: "(max-width: 1024px) 50vw, 20vw"
   }
 ] as const;

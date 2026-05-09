@@ -41,7 +41,8 @@ function PartnerLogoStripItem({ partner, instanceIndex }: { partner: Partner; in
   );
 }
 
-export function PartnerCarousel({ partners, cycleSeconds = 42 }: PartnerCarouselProps) {
+/** ~36 s por “bloque” de logos: ritmo visible y constante sin intervención del usuario */
+export function PartnerCarousel({ partners, cycleSeconds = 36 }: PartnerCarouselProps) {
   if (partners.length === 0) {
     return null;
   }
@@ -64,7 +65,7 @@ export function PartnerCarousel({ partners, cycleSeconds = 42 }: PartnerCarousel
       <p className="sr-only">
         Logos de aliados estratégicos en una fila continua con desplazamiento automático. Pausa al pasar el cursor.
       </p>
-      <div className="partner-marquee-viewport">
+      <div className="partner-marquee-viewport scrollbar-hide">
         <div className="partner-marquee-track">
           {trackPartners.map((p, index) => (
             <PartnerLogoStripItem key={`${p.slug}-${index}`} partner={p} instanceIndex={index} />

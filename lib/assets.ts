@@ -14,7 +14,11 @@ export const assetPaths = {
     eventEducationCaribe: "/assets/images/event-education-caribe.webp",
     feriaEducacionCover: "/assets/images/feria-educacion-caribe-cover.webp",
     /** Mapa de presencia / cobertura — página Contacto */
-    contactPresenceMap: "/assets/images/contacto-mapa-presencia.webp"
+    contactPresenceMap: "/assets/images/contacto-mapa-presencia.webp",
+    /** Galería hero — página Stands (`public/assets/images/stands-gallery-*.webp`) */
+    standsGallery01: "/assets/images/stands-gallery-01.webp",
+    standsGallery02: "/assets/images/stands-gallery-02.webp",
+    standsGallery03: "/assets/images/stands-gallery-03.webp"
   },
   /**
    * Inicio — sección «Nuestras líneas» (`public/assets/images/service-lines/`).
